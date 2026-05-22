@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melancholy Bot - Dokumentace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        github: {
+                            blue: '#0969da',
+                            gray: '#f6f8fa',
+                            border: '#d0d7de',
+                            text: '#24292f'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Jemné doladění pro GitHub style */
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+        .nav-link:hover { background-color: #eaeef2; }
+    </style>
+</head>
+<body class="bg-white text-github-text flex flex-col md:flex-row min-h-screen">
+
+    <aside class="w-full md:w-64 bg-github-gray border-b md:border-b-0 md:border-r border-github-border md:h-screen md:sticky md:top-0 overflow-y-auto hidden md:block">
+        <div class="p-6">
+            <h1 class="text-xl font-bold mb-4 border-b border-github-border pb-2">Melancholy Bot</h1>
+            <nav class="space-y-1 text-sm">
+                <a href="#uvod" class="nav-link block px-3 py-2 rounded-md font-medium text-github-text">Úvod</a>
+                <a href="#ekonomika" class="nav-link block px-3 py-2 rounded-md text-gray-600 hover:text-github-text">💰 Ekonomika</a>
+                <a href="#gambling" class="nav-link block px-3 py-2 rounded-md text-gray-600 hover:text-github-text">🎰 Gambling</a>
+                <a href="#podniky" class="nav-link block px-3 py-2 rounded-md text-gray-600 hover:text-github-text">🏢 Podniky</a>
+                <a href="#hudba" class="nav-link block px-3 py-2 rounded-md text-gray-600 hover:text-github-text">🎵 Hudba</a>
+                <a href="#xp" class="nav-link block px-3 py-2 rounded-md text-gray-600 hover:text-github-text">⭐ XP & Levely</a>
+                <a href="#zabava" class="nav-link block px-3 py-2 rounded-md text-gray-600 hover:text-github-text">🎱 Zábava</a>
+                <a href="#moderace" class="nav-link block px-3 py-2 rounded-md text-gray-600 hover:text-github-text">🛡️ Moderace</a>
+                <a href="#admin" class="nav-link block px-3 py-2 rounded-md text-gray-600 hover:text-github-text">⚙️ Admin</a>
+            </nav>
+        </div>
+    </aside>
+
+    <header class="md:hidden bg-github-gray border-b border-github-border p-4 flex justify-between items-center">
+        <h1 class="text-xl font-bold">Melancholy Bot</h1>
+        <a href="#obsah" class="text-sm font-medium text-github-blue">Menu ↓</a>
+    </header>
+
+    <main id="obsah" class="flex-1 p-6 md:p-10 lg:p-12 overflow-y-auto">
+        <div class="max-w-4xl mx-auto prose prose-slate prose-a:text-github-blue hover:prose-a:underline">
+            
+            <section id="uvod">
+                <h1 class="text-3xl font-semibold border-b border-github-border pb-2">Dokumentace bota Melancholy</h1>
+                <p>Vítejte na oficiální dokumentaci discord bota Melancholy! Tento bot poskytuje rozsáhlý ekonomický systém, podnikání, gambling, hudební funkce a levelovací systém.</p>
+                <p><strong>Důležité info:</strong></p>
+                <ul>
+                    <li>Všechny příkazy fungují jako <strong>Slash commands</strong> (začínají lomítkem <code>/</code>).</li>
+                    <li>Na výhry ve všech gambling hrách se vztahuje <strong>6.7% daň</strong>.</li>
+                    <li>Bot podporuje autocompletion (automatické doplňování) pro usnadnění práce.</li>
+                </ul>
+            </section>
+
+            <hr class="my-10 border-github-border" />
+
+            <section id="ekonomika">
+                <h2 class="text-2xl font-semibold border-b border-github-border pb-2">💰 Ekonomika</h2>
+                <p>Vydělávej, posílej a spravuj své 🪙 Coins.</p>
+
+                <div class="mb-6">
+                    <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/balance [user]</code>
+                    <p class="mt-2 text-sm text-gray-700">Zobrazí tvůj zůstatek nebo zůstatek jiného uživatele.</p>
+                </div>
+                <div class="mb-6">
+                    <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/work</code>
+                    <p class="mt-2 text-sm text-gray-700">Pracuj a získej 1 000 🪙 (jednou za 20 minut). Server boosteři dostávají 2×! Odměna se také zvyšuje podle tvého levelu (+100 🪙 za každý level) a pokud jsi zaměstnán v podniku.</p>
+                </div>
+                <div class="mb-6">
+                    <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/sendcoins &lt;user&gt; &lt;amount&gt;</code>
+                    <p class="mt-2 text-sm text-gray-700">Pošli coins jinému hráči ze svého účtu.</p>
+                </div>
+                <div class="mb-6">
+                    <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/sellorgan &lt;organ&gt;</code>
+                    <p class="mt-2 text-sm text-gray-700">Prodej orgán za rychlé coins (Oko, Ledvina, Játra, Plíce, Srdce). Způsobí rekonvalescenci po dobu několika hodin, během kterých nemůžeš pracovat ani hrát hazardní hry.</p>
+                </div>
+                <div class="mb-6">
+                    <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/leaderboard</code>
+                    <p class="mt-2 text-sm text-gray-700">Zobraz žebříček nejbohatších hráčů (Coins) a nejvyšších levelů (XP).</p>
+                </div>
+            </section>
+
+            <hr class="my-10 border-github-border" />
+
+            <section id="gambling">
+                <h2 class="text-2xl font-semibold border-b border-github-border pb-2">🎰 Gambling</h2>
+                <p>Zkus své štěstí a zdvojnásob (nebo ztrať) své coins. Většina her podporuje nepovinný argument <code>guide: True</code> pro zobrazení pravidel před začátkem.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/blackjack &lt;bet&gt; [solo]</code>
+                        <p class="mt-1 text-sm text-gray-700">Klasický Blackjack (21). Můžeš hrát proti dealerovi sám nebo v multiplayer lobby.</p>
+                    </div>
+                    <div>
+                        <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/slots &lt;bet&gt;</code>
+                        <p class="mt-1 text-sm text-gray-700">Výherní automat. Srovnej 3 symboly v řadě pro obrovské multiplikátory (až 100x za diamanty!).</p>
+                    </div>
+                    <div>
+                        <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/highlow &lt;bet&gt;</code>
+                        <p class="mt-1 text-sm text-gray-700">Hádej, zda bude příští číslo (1-100) vyšší nebo nižší. Řetěz výhry pro větší násobitel.</p>
+                    </div>
+                    <div>
+                        <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/baccarat &lt;bet&gt;</code>
+                        <p class="mt-1 text-sm text-gray-700">Vsaď na Hráče, Bankéře nebo Remízu. Klasické kasinové baccarat.</p>
+                    </div>
+                    <div>
+                        <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/coinflip &lt;opponent&gt; &lt;bet&gt;</code>
+                        <p class="mt-1 text-sm text-gray-700">Vyzvi hráče na coinflip o coins. Výherce bere vše.</p>
+                    </div>
+                    <div>
+                        <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/roulette &lt;opponent&gt; &lt;bet&gt;</code>
+                        <p class="mt-1 text-sm text-gray-700">Ruská ruleta. Střídejte se v mačkání spouště - přežij a ber celý pot!</p>
+                    </div>
+                    <div>
+                        <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/rps &lt;opponent&gt; &lt;bet&gt;</code>
+                        <p class="mt-1 text-sm text-gray-700">Kámen-nůžky-papír proti jinému hráči. Tajný výběr pomocí tlačítek.</p>
+                    </div>
+                    <div>
+                        <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/crash &lt;bet&gt;</code>
+                        <p class="mt-1 text-sm text-gray-700">Multiplayer hra s raketou. Násobitel stoupá a ty musíš stihnout vybrat coins dříve, než raketa spadne.</p>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="my-10 border-github-border" />
+
+            <section id="podniky">
+                <h2 class="text-2xl font-semibold border-b border-github-border pb-2">🏢 Podniky (Business)</h2>
+                <p>Kupuj a spravuj podniky, zaměstnávej lidi a buduj své impérium. Licence podniků je nutné obnovovat každých 7 dní.</p>
+
+                <div class="mb-4">
+                    <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/businesses</code>
+                    <p class="mt-1 text-sm text-gray-700">Zobrazí přehled všech podniků na serveru, volná místa a expirace.</p>
+                </div>
+                <div class="mb-4">
+                    <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/business buy &lt;typ&gt; &lt;nazev&gt;</code>
+                    <p class="mt-1 text-sm text-gray-700">Koupí nový podnik (Stánek, Restaurace, Kasíno, Korporát, Vládní Kancelář).</p>
+                </div>
+                <div class="mb-4">
+                    <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/business info &lt;nazev&gt;</code>
+                    <p class="mt-1 text-sm text-gray-700">Detailní přehled podniku, obsah sejfu a seznam zaměstnanců.</p>
+                </div>
+                <div class="mb-4">
+                    <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/business claim [all]</code>
+                    <p class="mt-1 text-sm text-gray-700">Vybere peníze nastřádané v sejfu tvého podniku (nebo všech tvých podniků pomocí <code>claimall</code>).</p>
+                </div>
+                <div class="mb-4">
+                    <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/business renew [all]</code>
+                    <p class="mt-1 text-sm text-gray-700">Zaplatí poměrnou část daně a prodlouží licenci zpět na 7 dní.</p>
+                </div>
+                <div class="mb-4">
+                    <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/business sell &lt;nazev&gt;</code>
+                    <p class="mt-1 text-sm text-gray-700">Prodá podnik zpět státu za 50% původní ceny (včetně obsahu sejfu).</p>
+                </div>
+                <div class="mb-4">
+                    <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/business aukce &lt;nazev&gt; [min_bid]</code>
+                    <p class="mt-1 text-sm text-gray-700">Vyhlásí hodinovou veřejnou aukci na tvůj podnik. Ostatní mohou přihazovat pomocí <code>/business bid</code>.</p>
+                </div>
+                <div class="mb-4">
+                    <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/business employ &lt;nazev&gt; &lt;user&gt;</code>
+                    <p class="mt-1 text-sm text-gray-700">Nabídne uživateli místo ve tvém podniku. Zaměstnanci mají vyšší výdělky z <code>/work</code> a generují peníze do tvého sejfu.</p>
+                </div>
+            </section>
+
+            <hr class="my-10 border-github-border" />
+
+            <section id="hudba">
+                <h2 class="text-2xl font-semibold border-b border-github-border pb-2">🎵 Hudba</h2>
+                <p>Přehrávání hudby v hlasových kanálech (využívá Lavalink).</p>
+
+                <ul class="list-disc pl-5 mt-2 space-y-2 text-sm text-gray-700">
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/play &lt;query&gt;</code> - Přehraje skladbu nebo přidá do fronty.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/skip</code> - Přeskočí aktuální skladbu.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/pause</code> - Pozastaví/obnoví přehrávání.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/stop</code> - Zastaví hudbu a vymaže frontu.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/np</code> - Ukáže, co právě hraje (vč. grafického baru průběhu).</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/queue</code> - Zobrazí aktuální frontu.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/volume &lt;1-150&gt;</code> - Nastaví hlasitost.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/loop</code> - Přepíná režim opakování.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/shuffle</code> - Zamíchá frontu.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/remove &lt;pozice&gt;</code> - Smaže konkrétní písničku z fronty.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/seek &lt;sekundy&gt;</code> - Přetočí hudbu.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/disconnect</code> - Odpojí bota z kanálu.</li>
+                </ul>
+            </section>
+
+            <hr class="my-10 border-github-border" />
+
+            <section id="xp">
+                <h2 class="text-2xl font-semibold border-b border-github-border pb-2">⭐ XP & Levely</h2>
+                <p>Bot odměňuje aktivitu (chatování a hlasové kanály) zkušenostními body. Za dosažení specifických levelů získáš automaticky role (1, 5, 10, 20, 50, 75, 100).</p>
+
+                <div class="mb-6">
+                    <code class="px-2 py-1 bg-gray-100 rounded border border-gray-200 font-mono text-sm text-pink-600">/xp [user]</code>
+                    <p class="mt-2 text-sm text-gray-700">Zobrazí tvé XP, aktuální level, grafický postup do dalšího ranku a seznam získaných rolí.</p>
+                </div>
+            </section>
+
+            <hr class="my-10 border-github-border" />
+
+            <section id="zabava">
+                <h2 class="text-2xl font-semibold border-b border-github-border pb-2">🎱 Zábava & Ostatní</h2>
+                
+                <ul class="list-disc pl-5 mt-2 space-y-2 text-sm text-gray-700">
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/8ball &lt;otazka&gt;</code> - Zeptej se na cokoliv.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/arrest &lt;user&gt;</code> - Zavře uživatele za mříže (vygeneruje obrázek).</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/iq [user]</code> - Vědecky změří tvoje (nebo cizí) IQ.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/lovecalc &lt;user1&gt; &lt;user2&gt;</code> - Vypočítá míru lásky s vtipným verdiktem.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/roll [stěny]</code> - Hodí kostkou (přednastaveno 6 stěn).</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/slap &lt;user&gt;</code> - Dej virtuální facku uživateli s náhodným předmětem.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/daily</code> - Systém pro denní otázky s autopingem (`set`, `list`, `remove`).</li>
+                </ul>
+            </section>
+
+            <hr class="my-10 border-github-border" />
+
+            <section id="moderace">
+                <h2 class="text-2xl font-semibold border-b border-github-border pb-2">🛡️ Moderace (Pouze pro Mody)</h2>
+                
+                <ul class="list-disc pl-5 mt-2 space-y-2 text-sm text-gray-700">
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/warn &lt;user&gt; &lt;reason&gt; [evidence]</code> - Varuje hráče a uloží do logů.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/unwarn &lt;ID&gt;</code> - Odebere varování nebo ban podle UUID z historie.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/ban &lt;user&gt; &lt;reason&gt; [duration]</code> - Zabanuje hráče (trvale, nebo např. 1h, 7d).</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/history [user]</code> - Zobrazí tresty uživatele.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/promote &lt;user&gt;</code> - Povýší moderátora o stupeň v Mod hierarchii.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/demote &lt;user&gt;</code> - Degraduje moderátora.</li>
+                </ul>
+            </section>
+
+            <hr class="my-10 border-github-border" />
+
+            <section id="admin">
+                <h2 class="text-2xl font-semibold border-b border-github-border pb-2">⚙️ Admin (Administrátoři)</h2>
+                
+                <ul class="list-disc pl-5 mt-2 space-y-2 text-sm text-gray-700">
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/add-balance</code>, <code class="text-pink-600 bg-gray-100 px-1 rounded">/reduce-balance</code>, <code class="text-pink-600 bg-gray-100 px-1 rounded">/set-balance</code> - Manipulace s penězi.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/addxp</code>, <code class="text-pink-600 bg-gray-100 px-1 rounded">/setlevel</code> - Administrace XP a levelů.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/backup create</code>, <code class="text-pink-600 bg-gray-100 px-1 rounded">/backup info</code>, <code class="text-pink-600 bg-gray-100 px-1 rounded">/backup load</code> - Kompletní nástroj pro zálohování a obnovu rolí, kategorií a kanálů!</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/massroleadd &lt;role&gt;</code> - Hromadně přidá roli všem členům na serveru (s postupným progress barem).</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/reboot</code> - Resync slash příkazů napříč Discordem.</li>
+                    <li><code class="text-pink-600 bg-gray-100 px-1 rounded">/settings</code> - Skupina pro nastavení bota a zobrazení historie akcí.</li>
+                </ul>
+            </section>
+
+            <div class="mt-16 text-center text-sm text-gray-500 border-t border-gray-200 pt-8">
+                Generováno pro bota <strong>Melancholy</strong>. <br>Design inspirován stylem repozitářů na GitHubu.
+            </div>
+        </div>
+    </main>
+</body>
+</html>
