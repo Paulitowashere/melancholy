@@ -3,352 +3,396 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Melancholy Bot | Dokumentace</title>
+    <title>Melancholy Bot - Dokumentace</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        github: {
-                            bg: '#ffffff',
-                            bgDark: '#0d1117',
-                            border: '#d0d7de',
-                            borderDark: '#30363d',
-                            text: '#24292f',
-                            textDark: '#c9d1d9',
-                            muted: '#57606a',
-                            mutedDark: '#8b949e',
-                            link: '#0969da',
-                            linkDark: '#58a6ff',
-                            hover: '#f3f4f6',
-                            hoverDark: '#161b22',
-                            sidebar: '#f6f8fa',
-                            sidebarDark: '#010409'
-                        }
+                        discord: { dark: '#1e1f22', darker: '#111214', light: '#2b2d31', accent: '#5865F2' }
                     }
                 }
             }
         }
     </script>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
-        /* Vlastní scrollbar pro GitHub feel */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #d0d7de; border-radius: 4px; }
-        .dark ::-webkit-scrollbar-thumb { background: #484f58; }
-        ::-webkit-scrollbar-thumb:hover { background: #8c959f; }
+        body { background-color: #111214; color: #dbdee1; }
+        .nav-link { transition: color 0.2s; }
+        .nav-link:hover { color: #5865F2; }
+        .card { background-color: #1e1f22; border: 1px solid #2b2d31; border-radius: 0.5rem; }
+        code { background-color: #2b2d31; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: monospace; color: #5865F2; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #111214; }
+        ::-webkit-scrollbar-thumb { background: #2b2d31; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #5865F2; }
     </style>
-    <script>
-        // Inicializace Dark Mode před načtením DOMu zamezí bliknutí
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark')
-        } else {
-            document.documentElement.classList.remove('dark')
-        }
-    </script>
 </head>
-<body class="bg-github-bg text-github-text dark:bg-github-bgDark dark:text-github-textDark transition-colors duration-200 flex flex-col md:flex-row min-h-screen">
+<body class="flex flex-col md:flex-row min-h-screen">
 
-    <aside class="w-full md:w-64 md:flex-shrink-0 bg-github-sidebar dark:bg-github-sidebarDark border-b md:border-b-0 md:border-r border-github-border dark:border-github-borderDark md:h-screen md:sticky md:top-0 overflow-y-auto hidden md:flex md:flex-col">
-        <div class="p-6 flex-1">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-xl font-bold tracking-tight">Melancholy</h1>
-            </div>
-            <nav class="space-y-1.5 text-sm font-medium">
-                <p class="px-3 text-xs font-semibold text-github-muted dark:text-github-mutedDark uppercase tracking-wider mb-2">Kategorie</p>
-                <a href="#uvod" class="flex items-center px-3 py-2 rounded-md hover:bg-github-hover dark:hover:bg-github-hoverDark transition-colors">📌 Úvod</a>
-                <a href="#ekonomika" class="flex items-center px-3 py-2 rounded-md hover:bg-github-hover dark:hover:bg-github-hoverDark transition-colors">💰 Ekonomika</a>
-                <a href="#gambling" class="flex items-center px-3 py-2 rounded-md hover:bg-github-hover dark:hover:bg-github-hoverDark transition-colors">🎰 Hazard</a>
-                <a href="#podniky" class="flex items-center px-3 py-2 rounded-md hover:bg-github-hover dark:hover:bg-github-hoverDark transition-colors">🏢 Podnikání</a>
-                <a href="#hudba" class="flex items-center px-3 py-2 rounded-md hover:bg-github-hover dark:hover:bg-github-hoverDark transition-colors">🎵 Hudba</a>
-                <a href="#xp" class="flex items-center px-3 py-2 rounded-md hover:bg-github-hover dark:hover:bg-github-hoverDark transition-colors">⭐ XP & Levely</a>
-                <a href="#zabava" class="flex items-center px-3 py-2 rounded-md hover:bg-github-hover dark:hover:bg-github-hoverDark transition-colors">🎱 Zábava</a>
-                <a href="#moderace" class="flex items-center px-3 py-2 rounded-md hover:bg-github-hover dark:hover:bg-github-hoverDark transition-colors">🛡️ Moderace</a>
-                <a href="#admin" class="flex items-center px-3 py-2 rounded-md hover:bg-github-hover dark:hover:bg-github-hoverDark transition-colors">⚙️ Administrace</a>
+    <aside class="w-full md:w-64 bg-discord-dark flex-shrink-0 border-r border-discord-light md:h-screen md:sticky top-0 overflow-y-auto">
+        <div class="p-6">
+            <h1 class="text-2xl font-bold text-white mb-2">Melancholy</h1>
+            <p class="text-sm text-gray-400 mb-6">Oficiální dokumentace bota</p>
+            <nav class="flex flex-col space-y-3">
+                <a href="#ekonomika" class="nav-link font-medium">💰 Ekonomika & Práce</a>
+                <a href="#podniky" class="nav-link font-medium">🏢 Podniky & Holdingy</a>
+                <a href="#akcie" class="nav-link font-medium">📈 Akciový trh</a>
+                <a href="#lootboxy" class="nav-link font-medium">📦 Lootboxy</a>
+                <a href="#casino" class="nav-link font-medium">🎰 Casino & Gambling</a>
+                <a href="#xp" class="nav-link font-medium">⭐ XP & Levely</a>
+                <a href="#hudba" class="nav-link font-medium">🎵 Hudba</a>
+                <a href="#zabava" class="nav-link font-medium">🎱 Zábava & Minihry</a>
+                <a href="#moderace" class="nav-link font-medium">🛡️ Moderace & Admin</a>
+                <a href="#tickety" class="nav-link font-medium">🎫 Ticket Systém</a>
+                <a href="#ostatni" class="nav-link font-medium">⚙️ Ostatní (Epic, Backup)</a>
             </nav>
-        </div>
-        
-        <div class="p-4 border-t border-github-border dark:border-github-borderDark">
-            <button id="theme-toggle" class="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium border border-github-border dark:border-github-borderDark rounded-md hover:bg-github-hover dark:hover:bg-github-hoverDark transition-colors">
-                <span id="theme-icon">🌙</span> <span id="theme-text">Dark Mode</span>
-            </button>
         </div>
     </aside>
 
-    <header class="md:hidden bg-github-sidebar dark:bg-github-sidebarDark border-b border-github-border dark:border-github-borderDark p-4 flex justify-between items-center sticky top-0 z-50">
-        <h1 class="text-xl font-bold">Melancholy</h1>
-        <div class="flex gap-4 items-center">
-            <button id="theme-toggle-mobile" class="text-xl">🌙</button>
-            <button id="mobile-menu-btn" class="text-github-link dark:text-github-linkDark font-medium">Menu</button>
-        </div>
-    </header>
-
-    <div id="mobile-menu" class="hidden md:hidden bg-github-bg dark:bg-github-bgDark border-b border-github-border dark:border-github-borderDark p-4 shadow-lg sticky top-[65px] z-40 max-h-[70vh] overflow-y-auto">
-        <nav class="flex flex-col space-y-2 text-sm font-medium">
-            <a href="#uvod" class="px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 mobile-link">📌 Úvod</a>
-            <a href="#ekonomika" class="px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 mobile-link">💰 Ekonomika</a>
-            <a href="#gambling" class="px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 mobile-link">🎰 Hazard</a>
-            <a href="#podniky" class="px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 mobile-link">🏢 Podnikání</a>
-            <a href="#hudba" class="px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 mobile-link">🎵 Hudba</a>
-            <a href="#xp" class="px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 mobile-link">⭐ XP & Levely</a>
-            <a href="#zabava" class="px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 mobile-link">🎱 Zábava</a>
-            <a href="#moderace" class="px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 mobile-link">🛡️ Moderace</a>
-            <a href="#admin" class="px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 mobile-link">⚙️ Administrace</a>
-        </nav>
-    </div>
-
-    <main class="flex-1 p-6 md:p-10 lg:p-14 overflow-y-auto w-full max-w-5xl mx-auto">
+    <main class="flex-1 p-6 md:p-12 lg:px-24 overflow-x-hidden">
         
-        <section id="uvod" class="mb-16 pt-4">
-            <div class="pb-6 mb-8 border-b border-github-border dark:border-github-borderDark">
-                <h1 class="text-4xl font-extrabold mb-4">Dokumentace bota Melancholy</h1>
-                <p class="text-lg text-github-muted dark:text-github-mutedDark">Komplexní Discord bot pro ekonomiku, podnikání, hudbu a správu serveru.</p>
+        <header class="mb-12 border-b border-discord-light pb-8">
+            <h1 class="text-4xl font-extrabold text-white mb-4">Dokumentace Melancholy Bota</h1>
+            <p class="text-lg text-gray-400 leading-relaxed">
+                Komplexní multifunkční Discord bot zaměřený na propracovanou ekonomiku, investice, podnikání, gambling, moderaci a hudbu. Níže naleznete detailní rozpis každého systému.
+            </p>
+        </header>
+
+        <section id="ekonomika" class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2"><span class="text-discord-accent">#</span> Ekonomika & Práce</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-white mb-3">Základní příkazy</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><code>/balance [user]</code> - Zobrazí zůstatek uživatele.</li>
+                        <li><code>/sendcoins &lt;user&gt; &lt;amount&gt;</code> - Převede coiny jinému hráči.</li>
+                        <li><code>/leaderboard</code> - Žebříček nejbohatších hráčů (a XP).</li>
+                        <li><code>/denni</code> - Vyzvednutí denní odměny. Funguje na principu "streaku" (den 1 = 500 🪙, den 30 = 50 000 🪙). Vynechání > 48h resetuje streak.</li>
+                    </ul>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-white mb-3">Práce & Kariéra</h3>
+                    <p class="text-sm text-gray-300 mb-3">Hráči musí řešit anti-bot minihry (matematika, emoji) pro úspěšnou práci.</p>
+                    <ul class="space-y-3 text-sm">
+                        <li><code>/career list/select</code> - Výběr povolání (Brigádník, Řidič, Programátor, Chirurg, CEO). Vyšší ranky vyžadují vyšší level, dávají víc peněz, ale mají delší cooldown.</li>
+                        <li><code>/work</code> - Základní výdělek. Boosteři mají 2x odměnu. Odměna roste s XP levelem (+100 🪙/lvl).</li>
+                        <li><code>/overtime</code> - Práce přesčas (v cooldownu). Dává 70 % odměny, ale je 50% šance na "vyhoření" (3x delší cooldown).</li>
+                        <li><code>/brigada</code> - Skupinová práce. Ostatní hráči se mohou přidat do 30s. Každý další hráč = +10 % bonus pro všechny.</li>
+                    </ul>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-white mb-3">Půjčky & Bankrot</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><code>/borrow &lt;lender&gt; &lt;amount&gt; &lt;interest&gt;</code> - Žádost o půjčku. Lze si půjčit max 1000x svého zůstatku. Splatnost je 7 dní.</li>
+                        <li><code>/activeloans</code> - Zobrazí půjčky (dlužník i věřitel).</li>
+                        <li><code>/payoff</code> - Splacení dluhu.</li>
+                        <li><strong>Nesplacení:</strong> Po uplynutí lhůty nastupuje exekuce (denně strženo 25% jistiny, bot automaticky zabavuje podniky).</li>
+                        <li><code>/bankrupt</code> - Pokud je hráč v mínusu, může vyhlásit bankrot. Účet se vynuluje, ale ekonomika je mu zablokována na 7-30 dní.</li>
+                    </ul>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold text-white mb-3">Ilegální činnost</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li><code>/rob &lt;user&gt;</code> - Pokus o okradení hráče. Šance se odvíjí od rozdílu zůstatků. Úspěch = 10-25% jeho zůstatku. Selhání = pokuta. Cooldown: 7 dní.</li>
+                        <li><code>/sellorgan &lt;organ&gt;</code> - Rychlé peníze na černém trhu (Oko, Ledvina...). Hráč získá peníze, ale je 2-24h v rekonvalescenci (blokována ekonomika).</li>
+                        <li><code>/blackmarket &lt;item&gt;</code> - Nákup riskantního zboží. Šance na obrovský zisk, ale i riziko policejní razie (Jail na 60 minut).</li>
+                    </ul>
+                </div>
             </div>
             
-            <div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-github-link dark:border-github-linkDark p-4 rounded-r-md mb-8">
-                <h3 class="font-bold text-github-link dark:text-github-linkDark mb-2 flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                    Důležité informace
-                </h3>
-                <ul class="list-disc list-inside space-y-1 text-sm text-github-text dark:text-github-textDark">
-                    <li>Všechny příkazy fungují jako <strong>Slash commands</strong> (začínají lomítkem <code>/</code>).</li>
-                    <li>Na výhry v hazardních hrách se vztahuje <strong>6.7% daň</strong>.</li>
-                    <li>Bot plně podporuje autocompletion (našeptávání) přímo v Discordu.</li>
+            <div class="mt-6 card p-6 bg-discord-light border-blue-500/30">
+                <h3 class="text-lg font-bold text-blue-400 mb-2">🛡️ Pojistný fond & Daně</h3>
+                <p class="text-sm">Veškerý gambling v botovi podléhá <strong>progresivní dani (5 % - 20 %)</strong> podle bohatství hráče. Z vybrané daně jde <strong>10 % do Pojistného fondu</strong>. Hráči po bankrotu si mohou z tohoto fondu zažádat o finanční injekci pomocí příkazu <code>/pojistny_fond</code> (max 50 000 🪙 jednou za 30 dní).</p>
+            </div>
+        </section>
+
+        <section id="podniky" class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2"><span class="text-discord-accent">#</span> Podniky & Holdingy</h2>
+            <p class="text-sm text-gray-300 mb-4">Propracovaný systém pasivního příjmu. Podniky generují peníze do sejfu, platí se za ně daně (licence na 7 dní). Výnosy ovlivňuje roční období a aktuální počasí (<code>/pocasi</code>).</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card p-6">
+                    <h3 class="text-lg font-semibold text-white mb-3">Správa Podniků</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><code>/businesses</code> - Seznam všech typů podniků a majitelů.</li>
+                        <li><code>/business buy &lt;type&gt; &lt;name&gt;</code> - Nákup nového podniku.</li>
+                        <li><code>/business info &lt;name&gt;</code> - Detail podniku (sejf, expozice, zaměstnanci).</li>
+                        <li><code>/business claim [all]</code> - Výběr peněz ze sejfu (lze všechny naráz).</li>
+                        <li><code>/business renew [all]</code> - Prodloužení licence. Platí se poměrná daň.</li>
+                        <li><code>/business sell</code> - Prodej státu za 50 % ceny.</li>
+                        <li><code>/business aukce &lt;name&gt;</code> - Vystavení podniku do hráčské aukce na 1 hodinu.</li>
+                        <li><code>/business bid</code> - Příhoz v běžící aukci.</li>
+                    </ul>
+                </div>
+
+                <div class="card p-6">
+                    <h3 class="text-lg font-semibold text-white mb-3">Zaměstnanci & Holdingy</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><code>/business employ/fire/leave/employees</code> - Majitelé mohou najmout hráče. Zaměstnanci mají bonus z <code>/work</code> a část peněz generují přímo do sejfu firmy.</li>
+                        <li><hr class="border-discord-light my-2"></li>
+                        <li><code>/holding create &lt;name&gt;</code> - Založení holdingu.</li>
+                        <li><code>/holding invite &lt;user&gt;</code> - Pozvání hráčů (max 10).</li>
+                        <li><code>/holding deposit / withdraw</code> - Společná pokladna. Výběr se automaticky dělí podle nastavených podílů (%).</li>
+                        <li><code>/holding setshares</code> - Majitel určuje, kolik % z výběru pokladny dostane konkrétní člen.</li>
+                        <li><code>/holding kick</code> - Vykopnutí člena (Force-kick s 30d cooldownem nebo hlasování členů).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="akcie" class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2"><span class="text-discord-accent">#</span> Akciový trh</h2>
+            <div class="card p-6">
+                <p class="text-sm text-gray-300 mb-4">Bot obsahuje plně simulovaný akciový trh (8 firem). Ceny se aktualizují <strong>každou hodinu</strong> pomocí matematického vzorce zahrnujícího volatilitu a návrat k průměru.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-discord-light p-3 rounded"><code class="block mb-1 text-center">/stocks</code><p class="text-xs text-center text-gray-400">Aktuální ceny a grafový trend</p></div>
+                    <div class="bg-discord-light p-3 rounded"><code class="block mb-1 text-center">/invest</code><p class="text-xs text-center text-gray-400">Nákup akcií</p></div>
+                    <div class="bg-discord-light p-3 rounded"><code class="block mb-1 text-center">/portfolio</code><p class="text-xs text-center text-gray-400">Přehled držených akcií (P&L)</p></div>
+                    <div class="bg-discord-light p-3 rounded"><code class="block mb-1 text-center">/sellstock</code><p class="text-xs text-center text-gray-400">Prodej držených akcií</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="lootboxy" class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2"><span class="text-discord-accent">#</span> Lootboxy & Item Inventář</h2>
+            <p class="text-sm text-gray-300 mb-4">Hráči mohou kupovat lootboxy (Basic, Premium, Legendary) a otevírat je (cooldown 12h) pro získání speciálních předmětů.</p>
+            <div class="card p-6">
+                <h3 class="text-lg font-semibold text-white mb-3">Příkazy: <code>/lootbox buy</code>, <code>/lootbox open</code>, <code>/lootbox inventory</code>, <code>/lootbox use</code></h3>
+                <h4 class="text-md font-medium text-gray-400 mt-4 mb-2">Možné dropy (předměty):</h4>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+                    <li>⚡ <strong>Work Booster 2x:</strong> Dvojnásobná odměna z práce na hodinu.</li>
+                    <li>🛡️ <strong>Štít streaku:</strong> Zachrání denní streak, pokud ho hráč zapomene vybrat.</li>
+                    <li>🍀 <strong>Šťastná mince:</strong> Vyšší šance v gamblingu na 30 minut.</li>
+                    <li>🌟 <strong>XP Boost 2x:</strong> Dvojnásobné XP z chatu/voice na hodinu.</li>
+                    <li>🔒 <strong>Ochrana před lupiči:</strong> Zabrání jednomu pokusu o <code>/rob</code>.</li>
+                    <li>🔧 <strong>Overtime Boost:</strong> Jedno <code>/overtime</code> zcela bez rizika vyhoření.</li>
+                    <li>📜 <strong>Daňové prázdniny:</strong> 7 dní se neplatí daně z podniků.</li>
+                    <li>💰 <strong>Okamžité Coiny:</strong> Různé balíčky (Small, Medium, Large) mincí rovnou na účet.</li>
                 </ul>
             </div>
         </section>
 
-        <section id="ekonomika" class="mb-16 scroll-mt-20">
-            <h2 class="text-2xl font-bold mb-6 pb-2 border-b border-github-border dark:border-github-borderDark">💰 Ekonomika</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="border border-github-border dark:border-github-borderDark rounded-lg p-4 bg-github-bg dark:bg-[#161b22] hover:border-github-muted dark:hover:border-gray-500 transition-colors shadow-sm">
-                    <code class="text-pink-600 dark:text-pink-400 font-mono text-sm font-semibold">/balance [user]</code>
-                    <p class="mt-2 text-sm text-github-muted dark:text-github-mutedDark">Zobrazí tvůj zůstatek nebo zůstatek jiného uživatele (hotovost i banka).</p>
+        <section id="casino" class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2"><span class="text-discord-accent">#</span> Casino & Gambling</h2>
+            <p class="text-sm text-gray-300 mb-4">Obrovský systém miniher se skvělou vizualizací (generování obrázků pomocí PIL pro Blackjack, Tower, Crash atd.). Všechny hry se dají hrát o herní peníze.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card p-5 border-t-4 border-t-green-500">
+                    <h3 class="font-bold text-lg mb-2">🃏 Blackjack (<code>/blackjack</code>)</h3>
+                    <p class="text-xs text-gray-400">Sólo nebo Multiplayer (v lobby). Plná pravidla: Hit, Stand, Double, Split, Insurance. Karty se vizuálně renderují do obrázku stolu.</p>
                 </div>
-                <div class="border border-github-border dark:border-github-borderDark rounded-lg p-4 bg-github-bg dark:bg-[#161b22] hover:border-github-muted dark:hover:border-gray-500 transition-colors shadow-sm">
-                    <code class="text-pink-600 dark:text-pink-400 font-mono text-sm font-semibold">/work</code>
-                    <p class="mt-2 text-sm text-github-muted dark:text-github-mutedDark">Pracuj a získej 1 000 🪙 (co 20 min). Boosteři mají 2×! Odměna roste s levelem a zaměstnáním.</p>
+                <div class="card p-5 border-t-4 border-t-red-500">
+                    <h3 class="font-bold text-lg mb-2">📈 Crash (<code>/crash</code>)</h3>
+                    <p class="text-xs text-gray-400">Multiplayer hra. Násobitel stoupá a graf se v reálném čase (PIL obrázky) vykresluje. Vyber (Cashout) dříve, než raketa vybouchne.</p>
                 </div>
-                <div class="border border-github-border dark:border-github-borderDark rounded-lg p-4 bg-github-bg dark:bg-[#161b22] hover:border-github-muted dark:hover:border-gray-500 transition-colors shadow-sm">
-                    <code class="text-pink-600 dark:text-pink-400 font-mono text-sm font-semibold">/sendcoins &lt;user&gt; &lt;amount&gt;</code>
-                    <p class="mt-2 text-sm text-github-muted dark:text-github-mutedDark">Pošli své naspořené coiny jinému hráči na serveru.</p>
+                <div class="card p-5 border-t-4 border-t-yellow-500">
+                    <h3 class="font-bold text-lg mb-2">💣 Mines (<code>/mines</code>)</h3>
+                    <p class="text-xs text-gray-400">Klasické miny (5x5 mřížka). Vyber si počet min (1-24). Postupně odkrývej diamanty pomocí Discord tlačítek a zvyšuj násobitel.</p>
                 </div>
-                <div class="border border-github-border dark:border-github-borderDark rounded-lg p-4 bg-github-bg dark:bg-[#161b22] hover:border-github-muted dark:hover:border-gray-500 transition-colors shadow-sm">
-                    <code class="text-pink-600 dark:text-pink-400 font-mono text-sm font-semibold">/sellorgan &lt;organ&gt;</code>
-                    <p class="mt-2 text-sm text-github-muted dark:text-github-mutedDark">Prodej orgán na černém trhu pro rychlé peníze. Následuje zdlouhavá rekonvalescence.</p>
+                <div class="card p-5 border-t-4 border-t-purple-500">
+                    <h3 class="font-bold text-lg mb-2">🏰 Tower (<code>/tower</code>)</h3>
+                    <p class="text-xs text-gray-400">Šplhej po 8 patrech věže. Vyber sloupec - pokud tam není mina, pokračuješ výš. 3 obtížnosti (Easy, Medium, Hard). Krásné UI.</p>
                 </div>
-                <div class="border border-github-border dark:border-github-borderDark rounded-lg p-4 bg-github-bg dark:bg-[#161b22] hover:border-github-muted dark:hover:border-gray-500 transition-colors shadow-sm md:col-span-2">
-                    <code class="text-pink-600 dark:text-pink-400 font-mono text-sm font-semibold">/leaderboard</code>
-                    <p class="mt-2 text-sm text-github-muted dark:text-github-mutedDark">Žebříček nejbohatších hráčů (Coins) a nejvyšších levelů (XP).</p>
+                <div class="card p-5 border-t-4 border-t-blue-500">
+                    <h3 class="font-bold text-lg mb-2">🎰 Slots (<code>/slots</code>)</h3>
+                    <p class="text-xs text-gray-400">Tříválcový výherní automat s jackpotem. Plynulá textová animace míchání válců.</p>
                 </div>
-            </div>
-        </section>
-
-        <section id="gambling" class="mb-16 scroll-mt-20">
-            <h2 class="text-2xl font-bold mb-6 pb-2 border-b border-github-border dark:border-github-borderDark">🎰 Hazard a Gambling</h2>
-            <p class="mb-4 text-sm text-github-muted dark:text-github-mutedDark">Tip: Většina her podporuje parametr <code>guide: True</code> pro zobrazení pravidel.</p>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="border border-github-border dark:border-github-borderDark rounded-lg p-4 bg-github-bg dark:bg-[#161b22] shadow-sm">
-                    <code class="text-pink-600 dark:text-pink-400 font-mono text-sm">/blackjack &lt;bet&gt; [solo]</code>
-                    <p class="mt-2 text-sm text-github-muted dark:text-github-mutedDark">Klasických 21. Hraj sólo proti dealerovi nebo s ostatními v lobby.</p>
+                <div class="card p-5 border-t-4 border-t-orange-500">
+                    <h3 class="font-bold text-lg mb-2">🎱 Keno (<code>/keno</code>)</h3>
+                    <p class="text-xs text-gray-400">Loterie. Vyber 1-10 čísel (z 80). Bot vylosuje 20 čísel a ukáže animaci. Výhra závisí na počtu tref podle výplatní tabulky.</p>
                 </div>
-                <div class="border border-github-border dark:border-github-borderDark rounded-lg p-4 bg-github-bg dark:bg-[#161b22] shadow-sm">
-                    <code class="text-pink-600 dark:text-pink-400 font-mono text-sm">/slots &lt;bet&gt;</code>
-                    <p class="mt-2 text-sm text-github-muted dark:text-github-mutedDark">Výherní automat. Srovnej 3 symboly (až 100x multiplikátor za diamanty).</p>
+                <div class="card p-5 border-t-4 border-t-pink-500">
+                    <h3 class="font-bold text-lg mb-2">🏇 Dostihy (<code>/horserace</code>)</h3>
+                    <p class="text-xs text-gray-400">Vsaď na jednoho ze 6 koní s různými kurzy a rychlostmi. Dostih je animovaný v textu zprávy do samotného cíle.</p>
                 </div>
-                <div class="border border-github-border dark:border-github-borderDark rounded-lg p-4 bg-github-bg dark:bg-[#161b22] shadow-sm">
-                    <code class="text-pink-600 dark:text-pink-400 font-mono text-sm">/highlow &lt;bet&gt;</code>
-                    <p class="mt-2 text-sm text-github-muted dark:text-github-mutedDark">Hádej, zda bude příští číslo (1-100) vyšší nebo nižší a řetěz výhry.</p>
+                <div class="card p-5 border-t-4 border-t-gray-500">
+                    <h3 class="font-bold text-lg mb-2">🪨📄✂️ RPS (<code>/rps</code>)</h3>
+                    <p class="text-xs text-gray-400">Kámen-nůžky-papír o peníze proti jinému hráči (duel). Výběr probíhá tajně přes ephemeral zprávy.</p>
                 </div>
-                <div class="border border-github-border dark:border-github-borderDark rounded-lg p-4 bg-github-bg dark:bg-[#161b22] shadow-sm">
-                    <code class="text-pink-600 dark:text-pink-400 font-mono text-sm">/baccarat &lt;bet&gt;</code>
-                    <p class="mt-2 text-sm text-github-muted dark:text-github-mutedDark">Kasinová klasika: vsaď na Hráče, Bankéře nebo Remízu.</p>
+                <div class="card p-5 border-t-4 border-t-indigo-500">
+                    <h3 class="font-bold text-lg mb-2">🪙 Coinflip & Roulette</h3>
+                    <p class="text-xs text-gray-400"><code>/coinflip</code> - Hod mincí proti hráči.<br><code>/roulette</code> - Ruská ruleta (tlačítka střel na sebe / na soupeře). Můžeš hrát proti hráči nebo proti botovi.</p>
                 </div>
-                <div class="border border-github-border dark:border-github-borderDark rounded-lg p-4 bg-github-bg dark:bg-[#161b22] shadow-sm">
-                    <code class="text-pink-600 dark:text-pink-400 font-mono text-sm">/coinflip &lt;user&gt; &lt;bet&gt;</code>
-                    <p class="mt-2 text-sm text-github-muted dark:text-github-mutedDark">Vyzvi hráče na hod mincí. Výherce bere vše.</p>
+                <div class="card p-5 border-t-4 border-t-teal-500">
+                    <h3 class="font-bold text-lg mb-2">🎴 Baccarat (<code>/baccarat</code>)</h3>
+                    <p class="text-xs text-gray-400">Kasinová klasika. Sázíš na Hráče, Bankéře nebo Remízu. Obsahuje textovou animaci rozdávání karet.</p>
                 </div>
-                <div class="border border-github-border dark:border-github-borderDark rounded-lg p-4 bg-github-bg dark:bg-[#161b22] shadow-sm">
-                    <code class="text-pink-600 dark:text-pink-400 font-mono text-sm">/roulette &lt;user&gt; &lt;bet&gt;</code>
-                    <p class="mt-2 text-sm text-github-muted dark:text-github-mutedDark">Ruská ruleta. Kdo přežije mačkání spouště, bere pot.</p>
+                <div class="card p-5 border-t-4 border-t-emerald-500">
+                    <h3 class="font-bold text-lg mb-2">⬆️ HighLow (<code>/highlow</code>)</h3>
+                    <p class="text-xs text-gray-400">Hádej, zda další číslo (1-100) bude vyšší nebo nižší. Řetěz výhry pro obří násobitel.</p>
                 </div>
-                <div class="border border-github-border dark:border-github-borderDark rounded-lg p-4 bg-github-bg dark:bg-[#161b22] shadow-sm">
-                    <code class="text-pink-600 dark:text-pink-400 font-mono text-sm">/crash &lt;bet&gt;</code>
-                    <p class="mt-2 text-sm text-github-muted dark:text-github-mutedDark">Vyber vklad dříve, než raketa spadne. Multiplayer hra.</p>
+                <div class="card p-5 border-t-4 border-t-rose-500">
+                    <h3 class="font-bold text-lg mb-2">♠️ Poker (<code>/poker</code>)</h3>
+                    <p class="text-xs text-gray-400">Texas Hold'em pro 2-8 hráčů. Kompletní vizualizace karet, žetonů a potu (PIL). Možnost Fold, Check, Call, Raise, All-in.</p>
                 </div>
             </div>
         </section>
 
-        <section id="podniky" class="mb-16 scroll-mt-20">
-            <h2 class="text-2xl font-bold mb-6 pb-2 border-b border-github-border dark:border-github-borderDark">🏢 Podnikání (Business)</h2>
-            <div class="space-y-3">
-                <div class="flex flex-col md:flex-row md:items-center gap-2 border-b border-github-border dark:border-github-borderDark pb-3">
-                    <code class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded font-mono text-sm text-pink-600 dark:text-pink-400 whitespace-nowrap w-fit">/businesses</code>
-                    <span class="text-sm text-github-muted dark:text-github-mutedDark">Přehled všech podniků na serveru, volná místa a expirace.</span>
+        <section id="xp" class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2"><span class="text-discord-accent">#</span> XP & Levely</h2>
+            <div class="card p-6 flex flex-col md:flex-row gap-6">
+                <div class="flex-1">
+                    <p class="text-sm text-gray-300 mb-4">Hráči sbírají XP za posílání zpráv (cooldown 60s), používání slash příkazů a bytí v hlasovém kanálu (každé 3 minuty). Server boosteři automaticky dostávají <strong>1.5x více XP</strong>.</p>
+                    <ul class="space-y-2 text-sm">
+                        <li><code>/xp [user]</code> - Zobrazí profil, level, progress bar a získané role.</li>
+                        <li><code>/leaderboard</code> - Záložka XP ukáže nejaktivnější hráče.</li>
+                    </ul>
+                    <p class="text-sm text-gray-300 mt-4">Při dosažení určitých levelů (1, 5, 10, 20, 50, 75, 100) bot automaticky přiděluje specifikované Discord Role a oznámí to ve vyhrazeném kanálu.</p>
                 </div>
-                <div class="flex flex-col md:flex-row md:items-center gap-2 border-b border-github-border dark:border-github-borderDark pb-3">
-                    <code class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded font-mono text-sm text-pink-600 dark:text-pink-400 whitespace-nowrap w-fit">/business buy &lt;typ&gt; &lt;název&gt;</code>
-                    <span class="text-sm text-github-muted dark:text-github-mutedDark">Koupí nový podnik (Stánek, Restaurace, Kasíno, Korporát...).</span>
-                </div>
-                <div class="flex flex-col md:flex-row md:items-center gap-2 border-b border-github-border dark:border-github-borderDark pb-3">
-                    <code class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded font-mono text-sm text-pink-600 dark:text-pink-400 whitespace-nowrap w-fit">/business claim [all]</code>
-                    <span class="text-sm text-github-muted dark:text-github-mutedDark">Vybere výdělky ze sejfu tvých podniků.</span>
-                </div>
-                <div class="flex flex-col md:flex-row md:items-center gap-2 border-b border-github-border dark:border-github-borderDark pb-3">
-                    <code class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded font-mono text-sm text-pink-600 dark:text-pink-400 whitespace-nowrap w-fit">/business renew [all]</code>
-                    <span class="text-sm text-github-muted dark:text-github-mutedDark">Zaplatí daň a prodlouží licenci (nutné každých 7 dní).</span>
-                </div>
-                <div class="flex flex-col md:flex-row md:items-center gap-2 border-b border-github-border dark:border-github-borderDark pb-3">
-                    <code class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded font-mono text-sm text-pink-600 dark:text-pink-400 whitespace-nowrap w-fit">/business aukce &lt;název&gt;</code>
-                    <span class="text-sm text-github-muted dark:text-github-mutedDark">Vyhlásí veřejnou aukci na tvůj podnik (příhozy přes `/business bid`).</span>
-                </div>
-                <div class="flex flex-col md:flex-row md:items-center gap-2 pb-3">
-                    <code class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded font-mono text-sm text-pink-600 dark:text-pink-400 whitespace-nowrap w-fit">/business employ &lt;user&gt;</code>
-                    <span class="text-sm text-github-muted dark:text-github-mutedDark">Zaměstná hráče - zvýší jim odměnu z /work a generuje ti zisk do sejfu.</span>
+                <div class="flex-1 bg-discord-dark p-4 rounded border border-discord-light">
+                    <h4 class="text-white font-bold text-sm mb-2">Admin Příkazy:</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><code>/addxp &lt;user&gt; &lt;amount&gt;</code> - Přidá/odebere XP.</li>
+                        <li><code>/setlevel &lt;user&gt; &lt;level&gt;</code> - Natvrdo nastaví level (vypočítá XP na začátek levelu).</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <section id="hudba" class="mb-16 scroll-mt-20">
-            <h2 class="text-2xl font-bold mb-6 pb-2 border-b border-github-border dark:border-github-borderDark">🎵 Hudba (Lavalink)</h2>
-            <div class="bg-github-sidebar dark:bg-github-sidebarDark rounded-lg border border-github-border dark:border-github-borderDark p-5 overflow-x-auto">
-                <table class="w-full text-left border-collapse text-sm">
-                    <tbody>
-                        <tr class="border-b border-github-border dark:border-github-borderDark">
-                            <td class="py-2 pr-4 font-mono text-pink-600 dark:text-pink-400">/play &lt;query&gt;</td>
-                            <td class="py-2 text-github-muted dark:text-github-mutedDark">Přehraje skladbu nebo ji přidá na konec fronty.</td>
-                        </tr>
-                        <tr class="border-b border-github-border dark:border-github-borderDark">
-                            <td class="py-2 pr-4 font-mono text-pink-600 dark:text-pink-400">/np</td>
-                            <td class="py-2 text-github-muted dark:text-github-mutedDark">Zobrazí aktuálně hrající skladbu a progress bar.</td>
-                        </tr>
-                        <tr class="border-b border-github-border dark:border-github-borderDark">
-                            <td class="py-2 pr-4 font-mono text-pink-600 dark:text-pink-400">/skip | /stop | /pause</td>
-                            <td class="py-2 text-github-muted dark:text-github-mutedDark">Základní ovládání přehrávače.</td>
-                        </tr>
-                        <tr class="border-b border-github-border dark:border-github-borderDark">
-                            <td class="py-2 pr-4 font-mono text-pink-600 dark:text-pink-400">/queue | /remove &lt;id&gt;</td>
-                            <td class="py-2 text-github-muted dark:text-github-mutedDark">Správa fronty skladeb.</td>
-                        </tr>
-                        <tr class="border-b border-github-border dark:border-github-borderDark">
-                            <td class="py-2 pr-4 font-mono text-pink-600 dark:text-pink-400">/volume &lt;1-150&gt;</td>
-                            <td class="py-2 text-github-muted dark:text-github-mutedDark">Změna hlasitosti bota.</td>
-                        </tr>
-                        <tr>
-                            <td class="py-2 pr-4 font-mono text-pink-600 dark:text-pink-400">/shuffle | /loop</td>
-                            <td class="py-2 text-github-muted dark:text-github-mutedDark">Zamíchání fronty a režim opakování.</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <section id="hudba" class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2"><span class="text-discord-accent">#</span> Hudba (Lavalink)</h2>
+            <p class="text-sm text-gray-300 mb-4">Bot plně podporuje přehrávání hudby pomocí Wavelink 3 napojeného na Lavalink uzel (YouTube, Spotify, SoundCloud).</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="card p-3"><code>/play &lt;query&gt;</code></div>
+                <div class="card p-3"><code>/skip</code></div>
+                <div class="card p-3"><code>/pause</code></div>
+                <div class="card p-3"><code>/stop</code></div>
+                <div class="card p-3"><code>/np</code> (Nyní hraje)</div>
+                <div class="card p-3"><code>/queue</code></div>
+                <div class="card p-3"><code>/volume &lt;1-150&gt;</code></div>
+                <div class="card p-3"><code>/loop</code></div>
+                <div class="card p-3"><code>/shuffle</code></div>
+                <div class="card p-3"><code>/remove &lt;pos&gt;</code></div>
+                <div class="card p-3"><code>/seek &lt;sec&gt;</code></div>
+                <div class="card p-3"><code>/disconnect</code></div>
             </div>
         </section>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            <section id="xp" class="scroll-mt-20">
-                <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-github-border dark:border-github-borderDark">⭐ XP & Levely</h2>
-                <p class="text-sm text-github-muted dark:text-github-mutedDark mb-4">Chatováním a aktivitou ve voice chatech sbíráš XP a odemykáš automatické role.</p>
-                <div class="border border-github-border dark:border-github-borderDark rounded-lg p-4 bg-github-bg dark:bg-[#161b22]">
-                    <code class="text-pink-600 dark:text-pink-400 font-mono text-sm">/xp [user]</code>
-                    <p class="mt-2 text-sm text-github-muted dark:text-github-mutedDark">Vygeneruje embed s tvým levelem, postupem do další úrovně a seznamem odemčených ranků.</p>
+        <section id="zabava" class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2"><span class="text-discord-accent">#</span> Zábava & Minihry</h2>
+            <div class="card p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <ul class="space-y-3">
+                            <li><code>/8ball &lt;otázka&gt;</code> - Kouzelná koule odpoví.</li>
+                            <li><code>/iq [user]</code> - Vědecky změří IQ s vtipným popiskem.</li>
+                            <li><code>/lovecalc &lt;user1&gt; &lt;user2&gt;</code> - Spočítá procento lásky (s Easter eggem pro konkrétní pár).</li>
+                            <li><code>/slap &lt;user&gt;</code> - Plácne uživatele náhodným předmětem (např. roličkou toaleťáku).</li>
+                            <li><code>/roll [strany]</code> - Hod kostkou (kritický úspěch/neúspěch).</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="space-y-3">
+                            <li><code>/animal &lt;user&gt;</code> - Zjistí "spirit animal" uživatele pro daný den. Založeno na seedu (den + ID).</li>
+                            <li><code>/lipton &lt;user&gt;</code> - Jaká jsi příchuť Lipton čaje? Různé vzácné/tajné příchutě s popisem osobnosti.</li>
+                            <li><code>/arrest &lt;user&gt;</code> - Vytvoří a pošle obrázek (avatar uživatele za vězeňskými mřížemi) pomocí PIL.</li>
+                            <li><code>/gn [msg]</code> - Popřeje dobrou noc serveru.</li>
+                            <li><code>/zpovednice</code> - Otevře formulář pro odeslání anonymní zpovědi (čeká na schválení moderátorem).</li>
+                        </ul>
+                    </div>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section id="zabava" class="scroll-mt-20">
-                <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-github-border dark:border-github-borderDark">🎱 Zábava</h2>
-                <ul class="space-y-2 text-sm text-github-muted dark:text-github-mutedDark">
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/8ball &lt;q&gt;</code> Magická koule.</li>
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/arrest &lt;user&gt;</code> Meme obrázek "behind bars".</li>
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/iq [user]</code> Přesné vědecké měření IQ.</li>
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/lovecalc &lt;u1&gt; &lt;u2&gt;</code> Vypočítá lásku.</li>
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/slap &lt;user&gt;</code> Virtuální pohlavek.</li>
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/daily</code> Systém denných otázek pro server.</li>
-                </ul>
-            </section>
+        <section id="moderace" class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2"><span class="text-discord-accent">#</span> Moderace & Admin</h2>
+            <div class="space-y-6">
+                
+                <div class="card p-6 border-l-4 border-discord-accent">
+                    <h3 class="text-xl font-bold text-white mb-3">🤖 AutoMod Filter</h3>
+                    <p class="text-sm text-gray-300 mb-2">Bot aktivně skenuje zprávy (využívá l33t-speak normalizaci). Reaguje na:</p>
+                    <ul class="list-disc list-inside text-sm text-gray-400 ml-4">
+                        <li><strong>CSAM:</strong> Okamžitý timeout 24 hodin a log.</li>
+                        <li><strong>Extremismus & HateSpeech:</strong> Smazání zprávy a udělení automatického varování (warn).</li>
+                        <li><strong>Discord Invites:</strong> Smazání. Mute eskaluje podle počtu porušení (Warn -> 30m -> 1h -> 6h -> 12h -> 24h). Obcházeno speciální rolí.</li>
+                    </ul>
+                </div>
 
-            <section id="moderace" class="scroll-mt-20">
-                <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-github-border dark:border-github-borderDark text-red-600 dark:text-red-400">🛡️ Moderace</h2>
-                <ul class="space-y-2 text-sm text-github-muted dark:text-github-mutedDark">
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/warn &lt;user&gt;</code> Udělí varování vč. evidence.</li>
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/unwarn &lt;id&gt;</code> Smaže trest dle UUID z logu.</li>
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/ban &lt;user&gt;</code> Zabanuje dočasně i trvale.</li>
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/history [user]</code> Výpis trestů hráče.</li>
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/promote /demote</code> Změna hierarchie módů.</li>
-                </ul>
-            </section>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card p-6">
+                        <h3 class="text-lg font-bold text-white mb-3">Mod Příkazy</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li><code>/warn &lt;user&gt; &lt;reason&gt; [evid]</code> - Varuje hráče. Generuje unikátní ID.</li>
+                            <li><code>/unwarn &lt;id&gt;</code> - Odebere trest/ban/timeout podle ID.</li>
+                            <li><code>/ban &lt;user&gt; &lt;reason&gt; [duration]</code> - Běží permanentně nebo dočasně (např. 30d). Obsahuje <strong>Pending Ban systém</strong> (pokud hráč není na serveru, ban se aplikuje okamžitě po jeho připojení).</li>
+                            <li><code>/history &lt;user&gt;</code> - Zobrazí posledních 10 trestů.</li>
+                            <li><code>/promote / /demote</code> - Posouvá moderátory v definované hierarchii rolí (Trial -> Mod -> Head -> Admin -> Správce).</li>
+                        </ul>
+                    </div>
+                    <div class="card p-6">
+                        <h3 class="text-lg font-bold text-white mb-3">Administrace</h3>
+                        <ul class="space-y-2 text-sm">
+                            <li><code>/settings prehled</code> - Výpis posledních trestů všech uživatelů.</li>
+                            <li><code>/settings mod-role</code> (a pridat/odebrat) - Dynamická správa rolí oprávněných k mod příkazům.</li>
+                            <li><code>/settings age-bypass</code> - Whitelist ID na bypassnutí 12h anti-raid filtru při napojení.</li>
+                            <li><code>/massroleadd &lt;role&gt;</code> - Projde všechny členy a přidá jim roli s progress barem.</li>
+                            <li><code>/zabavit &lt;podnik&gt;</code> - Zruší hráči podnik zásahem admina.</li>
+                            <li><code>/reboot / /shutdown</code> - Resync / Vypnutí.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <section id="admin" class="scroll-mt-20">
-                <h2 class="text-2xl font-bold mb-4 pb-2 border-b border-github-border dark:border-github-borderDark text-orange-600 dark:text-orange-400">⚙️ Administrace</h2>
-                <ul class="space-y-2 text-sm text-github-muted dark:text-github-mutedDark">
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/add-balance</code> Admin manipulace s penězi.</li>
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/addxp</code> Manipulace se zkušenostmi.</li>
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/backup ...</code> Zálohy kanálů a rolí.</li>
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/massroleadd &lt;role&gt;</code> Přidá roli všem lidem.</li>
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/reboot</code> Resync příkazů bota.</li>
-                    <li><code class="font-mono text-pink-600 dark:text-pink-400 mr-2">/settings</code> Konfigurace modulů.</li>
-                </ul>
-            </section>
-        </div>
+        <section id="tickety" class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2"><span class="text-discord-accent">#</span> Ticket Systém</h2>
+            <div class="card p-6">
+                <p class="text-sm text-gray-300 mb-4">Systém pro podporu. Ukládá data do <code>tickets.json</code>.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <ul class="space-y-2 text-sm">
+                        <li><code>/ticket panel</code> - Pošle embed s tlačítkem na založení ticketu (otevře Modal pro zadání důvodu).</li>
+                        <li><code>/ticket addmember</code> - Přidá někoho do otevřeného ticketu.</li>
+                        <li><code>/ticket close</code> - Zavře ticket okamžitě (vygeneruje luxusní Tailwind HTML transcript).</li>
+                        <li><code>/ticket closerequest</code> - Mod požádá o zavření s timerem. Uživatel to může přijmout nebo zamítnout tlačítky.</li>
+                    </ul>
+                    <div class="bg-discord-dark p-4 rounded text-sm">
+                        <strong>Tlačítka v ticketu:</strong>
+                        <ul class="list-disc list-inside mt-2 text-gray-400">
+                            <li><strong>Vzít ticket:</strong> Mod "claimne" ticket, pošle se zpráva, že se případu věnuje, a tlačítko zmizí.</li>
+                            <li><strong>Zavřít ticket:</strong> Otevře modal pro důvod a ticket ukončí, log uloží HTML soubor z konverzace.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <footer class="mt-20 pt-8 border-t border-github-border dark:border-github-borderDark text-center text-sm text-github-muted dark:text-github-mutedDark">
-            Melancholy 2026
-        </footer>
+        <section id="ostatni" class="mb-16">
+            <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2"><span class="text-discord-accent">#</span> Ostatní / Utility</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card p-5">
+                    <h3 class="font-bold text-white mb-2">🎮 Epic Games Tracker</h3>
+                    <p class="text-xs text-gray-400">Každý den v 18:00 bot zkontroluje API Epic Games a do určeného kanálu odešle krásný embed s právě uvolněnými hrami zdarma.</p>
+                </div>
+                <div class="card p-5">
+                    <h3 class="font-bold text-white mb-2">🎁 Giveaways</h3>
+                    <p class="text-xs text-gray-400">Příkazy <code>/giveaway create/delete/forcespin/reroll</code>. Plně funkční systém s tlačítkem pro zapojení, časovačem a automatickým vyhodnocením.</p>
+                </div>
+                <div class="card p-5">
+                    <h3 class="font-bold text-white mb-2">💾 Záložní Systém</h3>
+                    <p class="text-xs text-gray-400">Příkazy skupiny <code>/backup</code> umožňují kompletně uložit role, kategorie a kanály (vč. oprávnění) do JSONu a následně z něj server obnovit (missing/full režim).</p>
+                </div>
+                <div class="card p-5">
+                    <h3 class="font-bold text-white mb-2">🔢 Counting (Počítání)</h3>
+                    <p class="text-xs text-gray-400">Kanál, kde musí lidi počítat (čísly i slovy v češtině/angličtině). Zpracovává zprávy, maže chyby nebo duplicitní odesílatele a napomíná.</p>
+                </div>
+                <div class="card p-5">
+                    <h3 class="font-bold text-white mb-2">⬆️ Disboard Bump Bonus</h3>
+                    <p class="text-xs text-gray-400">Zachytává <code>/bump</code> od bota Disboard. Sleduje, kdo bumpnul, přiděluje mu odměnu k dalšímu /work a po 2h pingne příslušnou roli, že je čas bumpovat znovu.</p>
+                </div>
+                <div class="card p-5">
+                    <h3 class="font-bold text-white mb-2">🏆 Achievementy</h3>
+                    <p class="text-xs text-gray-400"><code>/achievements</code> ukazuje hráčský postup. Plnění výzev (milionář, pracant, lupič) přidává trvalé odměny na účet.</p>
+                </div>
+            </div>
+        </section>
+
     </main>
-
-    <script>
-        // JS logika pro Dark Mode toggle
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
-        const themeIcon = document.getElementById('theme-icon');
-        const themeText = document.getElementById('theme-text');
-        
-        function updateThemeIcon(isDark) {
-            const icon = isDark ? '☀️' : '🌙';
-            const text = isDark ? 'Light Mode' : 'Dark Mode';
-            if (themeIcon) themeIcon.textContent = icon;
-            if (themeText) themeText.textContent = text;
-            if (themeToggleMobileBtn) themeToggleMobileBtn.textContent = icon;
-        }
-
-        function toggleTheme() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.theme = 'light';
-                updateThemeIcon(false);
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.theme = 'dark';
-                updateThemeIcon(true);
-            }
-        }
-
-        // Init icons na load
-        updateThemeIcon(document.documentElement.classList.contains('dark'));
-
-        // Event listeners
-        if(themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
-        if(themeToggleMobileBtn) themeToggleMobileBtn.addEventListener('click', toggleTheme);
-
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-
-        if(mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
-        
-        // Skrýt menu po kliknutí na odkaz v mobilu
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-            });
-        });
-    </script>
 </body>
 </html>
