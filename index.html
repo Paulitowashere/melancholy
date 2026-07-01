@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Melancholy Bot - Kompletní Dokumentace</title>
+    <title>Melancholy Bot - Detailní Dokumentace</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
@@ -18,7 +18,9 @@
                             card: '#2b2d31', 
                             hover: '#313338',
                             accent: '#5865F2',
-                            accentHover: '#4752C4'
+                            red: '#ED4245',
+                            green: '#57F287',
+                            gold: '#FEE75C'
                         }
                     }
                 }
@@ -28,325 +30,359 @@
     <style>
         body { background-color: #111214; color: #dbdee1; }
         .nav-link { transition: all 0.2s ease-in-out; }
-        .nav-link:hover, .nav-link.active { color: #5865F2; background-color: #2b2d31; border-radius: 0.375rem; }
-        .card { 
+        .nav-link:hover, .nav-link.active { color: #ffffff; background-color: #5865F2; border-radius: 0.5rem; }
+        .cmd-card { 
             background-color: #1e1f22; 
             border: 1px solid #2b2d31; 
             border-radius: 0.75rem; 
-            transition: transform 0.2s ease, border-color 0.2s ease;
+            transition: all 0.2s ease;
         }
-        .card:hover { border-color: #5865F2; transform: translateY(-2px); }
-        code { background-color: #2b2d31; padding: 0.2rem 0.4rem; border-radius: 0.25rem; font-family: monospace; color: #7289da; font-weight: 600; }
+        .cmd-card:hover { border-color: #5865F2; }
+        .cmd-title { font-family: monospace; font-weight: 700; color: #5865F2; background-color: #2b2d31; padding: 0.2rem 0.5rem; border-radius: 0.375rem; font-size: 1.1rem; }
+        .cmd-arg { color: #a1a1aa; font-weight: 400; font-size: 0.95rem; }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #111214; }
         ::-webkit-scrollbar-thumb { background: #2b2d31; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #5865F2; }
-        
-        /* Pro search funkčnost */
         .hidden-by-search { display: none !important; }
     </style>
 </head>
 <body class="flex flex-col md:flex-row min-h-screen">
 
-    <!-- Sidebar Navigation -->
-    <aside class="w-full md:w-72 bg-discord-sidebar flex-shrink-0 border-r border-discord-card md:h-screen md:sticky top-0 flex flex-col z-10">
-        <div class="p-6 pb-2">
-            <h1 class="text-2xl font-extrabold text-white mb-1 flex items-center gap-2">
+    <aside class="w-full md:w-80 bg-discord-sidebar flex-shrink-0 border-r border-discord-card md:h-screen md:sticky top-0 flex flex-col z-10">
+        <div class="p-6 pb-4">
+            <h1 class="text-3xl font-extrabold text-white mb-2 flex items-center gap-3">
                 <span class="text-discord-accent">⚡</span> Melancholy
             </h1>
-            <p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-6">Oficiální Wiki</p>
+            <p class="text-sm text-gray-400 mb-6">Dokumentace příkazů a mechanik</p>
             
-            <!-- Vyhledávací pole -->
-            <div class="relative mb-6">
-                <input type="text" id="searchInput" placeholder="Hledat příkaz nebo funkci..." 
-                       class="w-full bg-discord-bg text-sm text-white px-4 py-3 rounded-lg border border-discord-card focus:outline-none focus:border-discord-accent transition-colors placeholder-gray-500">
-                <div class="absolute right-3 top-3 text-gray-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                </div>
+            <div class="relative">
+                <input type="text" id="searchInput" placeholder="Vyhledat příkaz (např. /work)..." 
+                       class="w-full bg-discord-bg text-sm text-white px-4 py-3 rounded-lg border border-discord-card focus:outline-none focus:border-discord-accent transition-colors">
             </div>
         </div>
 
-        <div class="flex-1 overflow-y-auto px-4 pb-6 custom-scrollbar">
+        <div class="flex-1 overflow-y-auto px-4 pb-6">
             <nav class="flex flex-col space-y-1">
-                <a href="#ekonomika" class="nav-link px-3 py-2 text-sm font-medium text-gray-300">💰 Ekonomika & Práce</a>
-                <a href="#podniky-holdingy" class="nav-link px-3 py-2 text-sm font-medium text-gray-300">🏢 Podniky & Holdingy</a>
-                <a href="#akcie" class="nav-link px-3 py-2 text-sm font-medium text-gray-300">📈 Akciový trh</a>
-                <a href="#lootboxy" class="nav-link px-3 py-2 text-sm font-medium text-gray-300">📦 Lootboxy</a>
-                <a href="#casino" class="nav-link px-3 py-2 text-sm font-medium text-gray-300">🎰 Casino & Gambling</a>
-                <a href="#xp" class="nav-link px-3 py-2 text-sm font-medium text-gray-300">⭐ XP & Levely</a>
-                <a href="#hudba" class="nav-link px-3 py-2 text-sm font-medium text-gray-300">🎵 Hudba</a>
-                <a href="#zabava" class="nav-link px-3 py-2 text-sm font-medium text-gray-300">🎱 Zábava & Minihry</a>
-                <a href="#moderace" class="nav-link px-3 py-2 text-sm font-medium text-gray-300">🛡️ Moderace & Admin</a>
-                <a href="#tickety" class="nav-link px-3 py-2 text-sm font-medium text-gray-300">🎫 Ticket Systém</a>
-                <a href="#ostatni" class="nav-link px-3 py-2 text-sm font-medium text-gray-300">⚙️ Ostatní utility</a>
+                <a href="#zakladni-ekonomika" class="nav-link px-4 py-3 text-sm font-medium text-gray-300">💰 Základní Ekonomika & Práce</a>
+                <a href="#ilegalni-cinnost" class="nav-link px-4 py-3 text-sm font-medium text-gray-300">🔪 Ilegální činnost & Dluhy</a>
+                <a href="#podniky-holdingy" class="nav-link px-4 py-3 text-sm font-medium text-gray-300">🏢 Podniky & Holdingy</a>
+                <a href="#akciovy-trh" class="nav-link px-4 py-3 text-sm font-medium text-gray-300">📈 Akciový trh (Stocks)</a>
+                <a href="#hazard-casino" class="nav-link px-4 py-3 text-sm font-medium text-gray-300">🎰 Hazard & Casino</a>
+                <a href="#zabepeceni-xp" class="nav-link px-4 py-3 text-sm font-medium text-gray-300">⭐ XP, Levely & Odměny</a>
+                <a href="#zabava" class="nav-link px-4 py-3 text-sm font-medium text-gray-300">🎱 Zábava & Ostatní</a>
+                <a href="#moderace-admin" class="nav-link px-4 py-3 text-sm font-medium text-gray-300">🛡️ Moderace, Tickety & Admin</a>
             </nav>
         </div>
     </aside>
 
-    <!-- Main Content -->
-    <main class="flex-1 p-6 md:p-10 lg:px-16 overflow-x-hidden">
+    <main class="flex-1 p-6 md:p-10 lg:p-14 overflow-x-hidden">
         
-        <header class="mb-12 border-b border-discord-card pb-8 doc-section">
-            <h2 class="text-4xl font-extrabold text-white mb-4">Dokumentace Systémů</h2>
-            <p class="text-lg text-gray-400 leading-relaxed max-w-4xl">
-                Zde naleznete podrobný rozpis všech mechanik. Melancholy není jen bot na příkazy, ale komplexní ekosystém provázaných funkcí.
-            </p>
-        </header>
-
         <div id="noResults" class="hidden text-center py-20">
-            <h3 class="text-2xl font-bold text-gray-500 mb-2">Nic nenalezeno 🕵️‍♂️</h3>
-            <p class="text-gray-600">Zkuste hledat jiný výraz.</p>
+            <h3 class="text-3xl font-bold text-gray-500 mb-2">Nic nenalezeno 🕵️‍♂️</h3>
+            <p class="text-gray-400">Zkuste hledat jiný příkaz nebo klíčové slovo.</p>
         </div>
 
-        <!-- EKONOMIKA & PRÁCE -->
-        <section id="ekonomika" class="mb-16 doc-section">
-            <h2 class="text-3xl font-bold text-white mb-6 border-b border-discord-card pb-2">💰 Ekonomika & Práce</h2>
+        <section id="zakladni-ekonomika" class="mb-20 doc-section">
+            <h2 class="text-3xl font-bold text-white mb-2">💰 Základní Ekonomika & Práce</h2>
+            <p class="text-gray-400 mb-8 border-b border-discord-card pb-4">Základní příkazy pro získávání a správu herní měny.</p>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Karta -->
-                <div class="card p-6 search-item">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-blue-500/20 p-2 rounded-lg text-blue-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></div>
-                        <h3 class="text-xl font-bold text-white">Práce a Kariéra</h3>
-                    </div>
-                    <p class="text-sm text-gray-400 mb-4">Pracovní systém je chráněn proti makerům a vyžaduje od hráče interakci. Výplata se škáluje podle levelu hráče.</p>
-                    <ul class="space-y-3 text-sm text-gray-300">
-                        <li><code>/career</code> - Výběr ze 5 profesí. Vyšší profese (např. Chirurg) se odemknou až na vyšších XP levelech, sypou více peněz, ale mají delší cooldown na práci.</li>
-                        <li><code>/work</code> - Základní práce. <strong>Mechanika:</strong> Bot pošle minihru (matematický příklad nebo hledání správného emoji z nabídky). Špatná odpověď = zlomková výplata a cooldown.</li>
-                        <li><code>/overtime</code> - Riskantní práce navíc. Dává 70 % odměny, ale je 50% šance na "vyhoření" (hráč je na 3x delší dobu paralyzován).</li>
-                        <li><code>/brigada</code> - Skupinový výdělek. Kdo se stihne připojit přes tlačítko do 30s, dostává bonus. (Každý člen = +10 % pro celou skupinu).</li>
-                    </ul>
-                </div>
+            <div class="space-y-6">
+                <article class="cmd-card p-6 search-item">
+                    <h3 class="mb-3"><span class="cmd-title">/balance</span> <span class="cmd-arg">[uživatel]</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-2">Zobrazí aktuální stav tvého účtu nebo účtu označeného hráče. Zůstatek nelze běžně dostat do mínusu, s výjimkou exekucí z nesplacených půjček.</p>
+                </article>
 
-                <!-- Karta -->
-                <div class="card p-6 search-item">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="bg-red-500/20 p-2 rounded-lg text-red-400"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-                        <h3 class="text-xl font-bold text-white">Půjčky a Bankrot</h3>
-                    </div>
-                    <p class="text-sm text-gray-400 mb-4">Systém dluhů plně simuluje reálná rizika půjčování mezi hráči.</p>
-                    <ul class="space-y-3 text-sm text-gray-300">
-                        <li><code>/borrow &lt;hráč&gt; &lt;čstka&gt; &lt;úrok&gt;</code> - Uzavření smlouvy na 7 dní.</li>
-                        <li><strong>Exekuce:</strong> Pokud dlužník do 7 dní nezaplatí přes <code>/payoff</code>, bot mu začne každý den strhávat peníze i do mínusu. Může automaticky zabavit jeho podniky a přepsat je na věřitele.</li>
-                        <li><code>/bankrupt</code> - Záchranná brzda. Vynuluje dluhy a stav účtu. Hráč však dostane "Bankrot" roli a na 7-30 dní nemůže posílat peníze ani vlastnit firmy.</li>
+                <article class="cmd-card p-6 search-item">
+                    <h3 class="mb-3"><span class="cmd-title">/sendcoins</span> <span class="cmd-arg">&lt;uživatel&gt; &lt;částka&gt;</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">Převede zadanou částku z tvého účtu na účet jiného hráče. Převody jsou bez poplatků a nepodléhají dani. Příkaz nelze použít během blokace po bankrotu.</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item border-l-4 border-discord-green">
+                    <h3 class="mb-3"><span class="cmd-title">/work</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-3">Základní příkaz pro výdělek. Po zadání ti bot pošle anti-bot minihru (matematický příklad nebo hledání emoji), na kterou máš 30 sekund. Pokud odpovíš správně, dostaneš výplatu. Odměna se skládá z:</p>
+                    <ul class="list-disc list-inside text-sm text-gray-400 space-y-1">
+                        <li><strong>Základu:</strong> 1 000 🪙 + bonus z tvé kariéry.</li>
+                        <li><strong>XP Bonusu:</strong> Za každý dosažený XP level dostáváš trvale +100 🪙 k výplatě.</li>
+                        <li><strong>Zaměstnání:</strong> Bonus pokud jsi zaměstnán v hráčském podniku.</li>
+                        <li><strong>Booster Multiplikátoru:</strong> Pokud boostuješ server, celá tvoje výplata se **násobí 2x**.</li>
                     </ul>
-                </div>
-            </div>
-            
-            <div class="mt-6 card p-6 border-l-4 border-yellow-500 search-item">
-                <h3 class="text-lg font-bold text-yellow-500 mb-2">🛡️ Pojistný fond & Progresivní daň (Detail)</h3>
-                <p class="text-sm text-gray-300">Veškerý hazard (Casino, Lootboxy) je zatížen tzv. progresivní daní. Pokud má hráč méně než 10k, platí z hazardu daň 0%. Pokud má nad milion, platí 20%. Z této vybrané daně se 10 % odesílá do centrálního <strong>Pojistného fondu</strong>. Zkrachovalí hráči si přes <code>/pojistny_fond</code> mohou zažádat o dávky, které se z tohoto fondu vyplácejí.</p>
+                    <p class="text-sm text-gray-400 mt-2"><em>Základní cooldown je 20 minut, ale mění se podle vybrané kariéry.</em></p>
+                </article>
+
+                <article class="cmd-card p-6 search-item">
+                    <h3 class="mb-3"><span class="cmd-title">/career list</span> <span class="text-gray-500 mx-2">|</span> <span class="cmd-title">/career select</span> <span class="cmd-arg">&lt;povolání&gt;</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-2">Umožňuje změnit tvou profesi. Vyšší profese dávají větší bonus k `/work`, ale prodlužují dobu čekání (cooldown). Odemykají se dosahováním vyšších XP levelů.</p>
+                    <div class="text-xs text-gray-400 bg-discord-bg p-3 rounded mt-2">Příklad: Brigádník (Lvl 0, CD: 20 min, +0) ➔ Programátor (Lvl 10, CD: 40 min, +4 000) ➔ CEO (Lvl 50, CD: 120 min, +29 000).</div>
+                </article>
+
+                <article class="cmd-card p-6 search-item">
+                    <h3 class="mb-3"><span class="cmd-title">/overtime</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-2">Riskantní práce v době, kdy máš na normální `/work` cooldown. Splnění minihry ti dá <strong>70 % tvé běžné výplaty</strong>. Je zde ale <strong>50% šance na vyhoření</strong>. Pokud vyhoříš, nedostaneš nic a tvůj cooldown na další práci se ztrojnásobí (např. ze 40 minut na 120 minut).</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item border-l-4 border-discord-gold">
+                    <h3 class="mb-3"><span class="cmd-title">/brigada</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-2">Zahájí skupinovou práci, do které se mohou ostatní hráči připojit kliknutím na tlačítko do 30 sekund. Za každého připojeného hráče se celková výplata <strong>všech účastníků zvyšuje o 10 %</strong> (max +50 %). Skvělé pro aktivní chaty.</p>
+                </article>
             </div>
         </section>
 
-        <!-- PODNIKY & HOLDINGY -->
-        <section id="podniky-holdingy" class="mb-16 doc-section">
-            <h2 class="text-3xl font-bold text-white mb-6 border-b border-discord-card pb-2">🏢 Podniky & Holdingy</h2>
-            <p class="text-gray-400 mb-6 max-w-4xl">Komplexní systém pasivního příjmu. O podniky se musí hráči starat, platit daně (licence) a tvořit korporace.</p>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Podniky Detail -->
-                <div class="card p-6 search-item">
-                    <h3 class="text-xl font-bold text-white mb-4 text-discord-accent">Jak fungují Podniky</h3>
+        <section id="ilegalni-cinnost" class="mb-20 doc-section">
+            <h2 class="text-3xl font-bold text-white mb-2">🔪 Ilegální činnost & Dluhy</h2>
+            <p class="text-gray-400 mb-8 border-b border-discord-card pb-4">Rychlé, ale riskantní způsoby výdělku a půjčování mezi hráči.</p>
+
+            <div class="space-y-6">
+                <article class="cmd-card p-6 search-item border-l-4 border-purple-500">
+                    <h3 class="mb-3"><span class="cmd-title">/blackmarket</span> <span class="cmd-arg">&lt;zboží&gt;</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-2">Investuješ peníze do nákupu nelegálního zboží (Kradené zboží, VIP info atd.), které okamžitě prodáš se značným ziskem. Je zde ale pevně daná šance na <strong>policejní razii (20 % – 50 %)</strong> podle hodnoty zboží.</p>
+                    <p class="text-sm text-discord-red mt-2"><strong>Riziko:</strong> Pokud tě chytí, přijdeš o potenciální výdělek a dostaneš Jail na 60 minut (během kterého nesmíš vydělávat ani sázet). Cooldown na černý trh je 120 minut.</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item">
+                    <h3 class="mb-3"><span class="cmd-title">/rob</span> <span class="cmd-arg">&lt;uživatel&gt;</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-2">Pokusíš se okrást jiného hráče (cíl musí mít minimálně 1 000 🪙). Šance na úspěch je základních 45 % a zvyšuje se podle toho, o kolik jsi chudší než oběť. <strong>Cooldown je 7 dní!</strong></p>
+                    <ul class="list-disc list-inside text-sm text-gray-400 space-y-1">
+                        <li><strong>Úspěch:</strong> Ukradneš 10 % až 25 % zůstatku oběti.</li>
+                        <li><strong>Selhání:</strong> Policie ti napaří pokutu 5 % až 15 % tvého vlastního zůstatku.</li>
+                        <li><em>Lootbox item "Ochrana před lupiči" tě před tímto příkazem dokáže 1x zachránit.</em></li>
+                    </ul>
+                </article>
+
+                <article class="cmd-card p-6 search-item">
+                    <h3 class="mb-3"><span class="cmd-title">/sellorgan</span> <span class="cmd-arg">&lt;orgán&gt;</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-2">Prodej část svého těla (Oko, Ledvina, Srdce...) pro masivní okamžitou finanční injekci. Odměna je kalkulována jako 50 % toho, co bys vydělal normální prací za daný čas.</p>
+                    <p class="text-sm text-discord-red mt-2"><strong>Riziko:</strong> Upadneš do těžké rekonvalescence na 2 až 24 hodin, během které ti bot zablokuje veškeré příkazy na peníze a hazard.</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item border-t-2 border-t-discord-accent">
+                    <h3 class="mb-3"><span class="cmd-title">/borrow</span> <span class="cmd-arg">&lt;věřitel&gt; &lt;částka&gt; &lt;úrok&gt;</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-3">Vyžádáš si od jiného hráče půjčku. Uživatel musí v embedu souhlasit. Úrok určujete při žádosti (např. 10 %). Splatnost je pevně stanovena na <strong>7 dní</strong>. Lze si půjčit max 1000x svého vlastního zůstatku. Dluhy vracíš příkazem <code>/payoff</code>.</p>
+                    <p class="text-sm font-bold text-discord-red">Co se stane při nesplacení do 7 dnů (Exekuce):</p>
+                    <p class="text-sm text-gray-400 mb-2">Půjčka přejde do stavu "overdue". Každý den ti "Kancelář pro Exekuce" nemilosrdně strhne <strong>25 % z jistiny</strong> i do mínusu a pošle to věřiteli. Bot ti navíc začne <strong>automaticky zabavovat tvé podniky</strong> a za 50% jejich ceny z nich splácet dluh věřiteli.</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item">
+                    <h3 class="mb-3"><span class="cmd-title">/bankrupt</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">Pokud jsi v mínusu a nemáš žádné aktivní dluhy vůči hráčům, můžeš vyhlásit osobní bankrot. Zůstatek se ti zresetuje na 0, ale ekonomika (práce, posílání, hazard) ti bude zablokována na 7 až 30 dní podle toho, jak velký dluh jsi smazal.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="podniky-holdingy" class="mb-20 doc-section">
+            <h2 class="text-3xl font-bold text-white mb-2">🏢 Podniky & Holdingy</h2>
+            <p class="text-gray-400 mb-8 border-b border-discord-card pb-4">Systém pro pasivní příjem, zaměstnávání hráčů a vytváření firemních syndikátů.</p>
+
+            <div class="space-y-6">
+                <article class="cmd-card p-6 search-item">
+                    <h3 class="text-xl font-bold text-white mb-4 text-discord-accent">Příkazy pro vlastníky podniků (/business)</h3>
                     <ul class="space-y-4 text-sm text-gray-300">
-                        <li><strong>Pořizení a chod:</strong> Hráč si koupí podnik (<code>/business buy</code>). Podnik má vlastní <em>sejf</em>, do kterého se každou hodinu generují peníze na základě výkonu. Peníze se musí vybírat manuálně (<code>/business claim</code>).</li>
-                        <li><strong>Environmentální vlivy:</strong> Ziskovost se mění podle ročního období bota a aktuálního počasí (příkaz <code>/pocasi</code>). Zmrzlinárna v zimě a dešti generuje zlomky toho, co v létě.</li>
-                        <li><strong>Licence a Exekuce:</strong> Každý podnik má licenci na 7 dní. Před vypršením ji majitel musí obnovit (<code>/business renew</code>) zaplacením daně podle hodnoty podniku. Pokud vyprší, podnik chátrá, negeneruje peníze a po 3 dnech spadne do vlastnictví státu.</li>
-                        <li><strong>Aukce:</strong> Přes <code>/business aukce</code> může majitel vystavit firmu na volný trh, kde ostatní hráči po dobu 1 hodiny přihazují (<code>/business bid</code>).</li>
+                        <li><span class="cmd-title">/business buy</span> <span class="cmd-arg">&lt;typ&gt; &lt;název&gt;</span> - Koupí nový podnik. Každý typ podniku (Stánek, Korporát, Vesmírná agentura) má jinou nákupní cenu, pasivní hodinovou generaci peněz a kapacitu trezoru. Hráč jich může mít max 7.</li>
+                        <li><span class="cmd-title">/business claim</span> <span class="cmd-arg">[all]</span> - Vybere peníze, které se podniku vygenerovaly do jeho trezoru. Pokud je majitel v Holdingu, jdou tyto peníze do společné pokladny.</li>
+                        <li><span class="cmd-title">/business renew</span> <span class="cmd-arg">[all]</span> - Každý podnik má platnou licenci na 7 dní, po kterých chátrá a je zabaven státem. Tímto příkazem platíš poměrnou daň a obnovuješ licenci zpět na 7 dní.</li>
+                        <li><span class="cmd-title">/business sell</span> <span class="cmd-arg">&lt;název&gt;</span> - Okamžitě prodá podnik státu a vrátí ti 50 % jeho pořizovací hodnoty.</li>
+                        <li><span class="cmd-title">/business aukce</span> <span class="cmd-arg">&lt;název&gt; &lt;min_příhoz&gt;</span> - Vystaví tvůj podnik do veřejné aukce na 1 hodinu. Ostatní hráči mohou přihazovat pomocí <code>/business bid</code>. Vítěz aukce ti zaplatí a stane se novým majitelem.</li>
+                    </ul>
+                    <div class="mt-4 bg-discord-bg p-3 rounded text-sm text-gray-400">
+                        <strong>Vliv Počasí a Sezóny:</strong> Příjem podniků není statický! Bot interně sleduje roční období a denně losuje počasí (<code>/pocasi</code>). Stánek s párky vynesne v parném létě +50 %, zatímco v zimě a v bouřce ztrácí.
+                    </div>
+                </article>
+
+                <article class="cmd-card p-6 search-item">
+                    <h3 class="text-xl font-bold text-white mb-4">Zaměstnanci firem</h3>
+                    <p class="text-sm text-gray-300 mb-2">Majitel podniku může přijmout ostatní hráče pomocí <span class="cmd-title">/business employ</span> a propustit je přes <span class="cmd-title">/business fire</span>.</p>
+                    <p class="text-sm text-gray-400"><strong>Proč být zaměstnancem?</strong> Jako zaměstnanec dostáváš pasivní peněžní bonus ke každému svému použití příkazu <code>/work</code>. Navíc za každé tvé <code>/work</code> se automaticky vygeneruje bonusová částka do trezoru podniku (příjem pro tvého šéfa).</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item border-l-4 border-blue-500">
+                    <h3 class="text-xl font-bold text-white mb-4">Holding Companies (/holding)</h3>
+                    <p class="text-sm text-gray-300 mb-3">Založením holdingu (<code>/holding create</code>) a pozváním přátel (<code>/holding invite</code>) vytvoříte sdílenou pokladnu. Všechny peníze vybrané z firem členů jdou přímo sem. Kdokoliv navíc může peníze do holdingu darovat (<code>/holding deposit</code>).</p>
+                    <h4 class="text-white font-bold mb-1">Dělení zisku:</h4>
+                    <p class="text-sm text-gray-400 mb-3">Majitel holdingu nemůže peníze z pokladny ukrást! Nastavuje fixní procentuální podíly přes <code>/holding setshares</code> (např. 50% pro sebe, 25% pro člena A, 25% pro člena B). Jakmile majitel použije <code>/holding withdraw 100 000</code>, systém tuto částku okamžitě matematicky rozdělí a rozešle na účty všech členů.</p>
+                    <h4 class="text-white font-bold mb-1">Ochrana členů před vyhozením:</h4>
+                    <p class="text-sm text-gray-400">Aby majitel nemohl někoho pozvat, vzít jeho peníze a vykopnout ho, příkaz <code>/holding kick</code> vyžaduje demokratické hlasování ostatních členů. Majitel sice má "Force Kick" (okamžité vyhození bez hlasování), ale může ho použít jen 1x za měsíc. Jakékoliv vyhození navíc automaticky vyplatí vyhozenému 20 % z aktuální pokladny holdingu jako odstupné.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="akciovy-trh" class="mb-20 doc-section">
+            <h2 class="text-3xl font-bold text-white mb-2">📈 Akciový trh (Stocks)</h2>
+            <p class="text-gray-400 mb-8 border-b border-discord-card pb-4">Funkční simulátor burzy reagující na čas.</p>
+
+            <div class="cmd-card p-6 search-item relative overflow-hidden">
+                <p class="text-sm text-gray-300 mb-4 z-10 relative">Na trhu je 8 firem. Ceny jejich akcií se přepočítávají <strong>každou hodinu</strong> pomocí matematického modelu, který zohledňuje volatilitu a tendenci k návratu k průměru.</p>
+                <ul class="space-y-4 text-sm text-gray-300 z-10 relative">
+                    <li><span class="cmd-title">/stocks</span> - Vypíše aktuální ceny všech akcií a ukáže, zda cena oproti minulé hodině stoupla 📈 nebo klesla 📉.</li>
+                    <li><span class="cmd-title">/invest</span> <span class="cmd-arg">&lt;ticker&gt; &lt;coins&gt;</span> - Nakoupí akcie dané společnosti. Musíš zadat kolik herní měny chceš investovat (bot ti automaticky nakoupí maximální počet celých akcií a zbytek peněz neodečte).</li>
+                    <li><span class="cmd-title">/portfolio</span> - Ukáže přehled tvých nakoupených akcií, průměrnou nákupní cenu a v reálném čase vypočítá tvůj aktuální zisk (nebo ztrátu) v procentech i mincích.</li>
+                    <li><span class="cmd-title">/sellstock</span> <span class="cmd-arg">&lt;ticker&gt; [počet]</span> - Prodá držené akcie za aktuální tržní cenu a realizuje tvůj profit/ztrátu zpět na účet. (Při zadání počtu 0 prodá všechny akcie dané firmy).</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="hazard-casino" class="mb-20 doc-section">
+            <h2 class="text-3xl font-bold text-white mb-2">🎰 Hazard & Casino</h2>
+            <p class="text-gray-400 mb-8 border-b border-discord-card pb-4">Propracované minihry, vizualizované pomocí generovaných obrázků. <em>Upozornění: Na všechny výhry se uplatňuje progresivní daň (6.7 % - 20 %), ze které se financuje Pojistný fond.</em></p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <article class="cmd-card p-6 search-item border-t-4 border-t-green-500">
+                    <h3 class="text-lg font-bold text-white mb-2">🃏 <span class="cmd-title">/blackjack</span></h3>
+                    <p class="text-sm text-gray-300 mb-2">Můžeš hrát sám (parametr <code>solo:True</code>) nebo otevřít lobby pro více hráčů. Bot fyzicky nakreslí herní stůl s kartami a tvým avatarem do obrázku. Obsahuje plná kasinová pravidla: Hit, Stand, Double Down (dvojitá sázka pro 1 kartu), Split (rozdělení párů do dvou her) i Insurance (pojištění proti dealerově Blackjacku).</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item border-t-4 border-t-red-500">
+                    <h3 class="text-lg font-bold text-white mb-2">📈 <span class="cmd-title">/crash</span></h3>
+                    <p class="text-sm text-gray-300 mb-2">Komunitní minihra. Raketa startuje a její násobitel neustále roste. Musíš kliknout na "Cashout" dříve, než raketa v náhodný moment vybouchne. Bot průběh graficky kreslí do živého grafu, kde jsou vidět i markery výběrů ostatních hráčů.</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item border-t-4 border-t-yellow-500">
+                    <h3 class="text-lg font-bold text-white mb-2">💣 <span class="cmd-title">/mines</span></h3>
+                    <p class="text-sm text-gray-300 mb-2">Klasické hledání min. Vybereš si kolik min chceš na hrací ploše 5x5 schovat (1-24). Odkrýváním drahokamů přes Discord tlačítka násobitel roste. Kdykoliv po prvním drahokamu si přes ephemerální (soukromou) zprávu můžeš výhru vybrat.</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item border-t-4 border-t-purple-500">
+                    <h3 class="text-lg font-bold text-white mb-2">🏰 <span class="cmd-title">/tower</span></h3>
+                    <p class="text-sm text-gray-300 mb-2">Šplháš po věži o 8 patrech. Zvolíš si obtížnost (Easy/Medium/Hard). V každém patře hádáš bezpečný sloupec. Animováno přes dynamicky překreslovaný obrázek (PIL). Lze ukončit a vzít zisk v každém patře.</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item border-t-4 border-t-blue-500">
+                    <h3 class="text-lg font-bold text-white mb-2">♠️ <span class="cmd-title">/poker</span></h3>
+                    <p class="text-sm text-gray-300 mb-2">Kompletní Texas Hold'em pro 2-8 hráčů. Bot posílá skryté karty do tvých soukromých zpráv (ephemeral) a veřejně na stůl kreslí komunitní karty a pot. Podporuje Call, Check, Raise, Fold i All-in fáze.</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item border-t-4 border-t-orange-500">
+                    <h3 class="text-lg font-bold text-white mb-2">🏇 <span class="cmd-title">/horserace</span></h3>
+                    <p class="text-sm text-gray-300 mb-2">Sázka na jednoho ze 6 koní (s různými jmény a kurzy). Bot 6x za sebou upraví embed zprávu a vizuálně na textové dráze odsimuluje dostih od startu do cíle podle jejich rychlostí.</p>
+                </article>
+            </div>
+
+            <div class="mt-6 bg-discord-bg p-5 rounded-lg border border-discord-card search-item">
+                <h4 class="text-white font-bold mb-3">Další hazardní příkazy:</h4>
+                <ul class="text-sm text-gray-300 space-y-2">
+                    <li><span class="cmd-title">/roulette</span> - Ruská ruleta. Hraješ buď proti vybranému hráči, nebo sólo proti chytrému botovi. Zvolíš, zda vystřelíš na sebe (bezpečné = získáš tah navíc) nebo na soupeře.</li>
+                    <li><span class="cmd-title">/slots</span> - Tříválcový výherní automat s animací roztáčení válců. 3x 💎 znamená 100x Jackpot.</li>
+                    <li><span class="cmd-title">/keno</span> - Loterie. Zvolíš 1 až 10 čísel, bot losuje 20. Vyhráváš obří násobky podle toho, kolik čísel trefíš.</li>
+                    <li><span class="cmd-title">/coinflip</span> a <span class="cmd-title">/rps</span> - Souboje 1v1 o vsazené peníze. (Panna/Orel nebo tajná volba Kámen/Nůžky/Papír).</li>
+                    <li><span class="cmd-title">/baccarat</span> - Vsázíš na to, zda vyhraje ruka Hráče, ruka Bankéře nebo bude Remíza.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="zabepeceni-xp" class="mb-20 doc-section">
+            <h2 class="text-3xl font-bold text-white mb-2">⭐ XP, Levely & Odměny</h2>
+            <p class="text-gray-400 mb-8 border-b border-discord-card pb-4">Systém zkušebních bodů, denních odměn a inventář.</p>
+
+            <div class="space-y-6">
+                <article class="cmd-card p-6 search-item">
+                    <h3 class="mb-3"><span class="cmd-title">/xp</span> <span class="cmd-arg">[uživatel]</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">Zobrazí tvůj profil, aktuální level a vizuální lištu průběhu k další úrovni. XP se získávají psaním v chatu (cooldown 60s) nebo bytím v aktivním Voice kanálu. Server Boosteři dostávají automaticky <strong>1.5x více XP</strong>. Dosažením konkrétních levelů bot automaticky přiděluje serverové role.</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item border-l-4 border-yellow-400">
+                    <h3 class="mb-3"><span class="cmd-title">/denni</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">Každých 20 hodin si můžeš vybrat denní odměnu. Tím roste tvůj "streak" a odměna se astronomicky zvyšuje (až po 50 000 mincí). Pokud si odměnu nevybereš do 48 hodin, streak propadá zpět na 1. den.</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item border-l-4 border-pink-500">
+                    <h3 class="mb-3"><span class="cmd-title">/lootbox buy / open / use / inventory</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-2">Za herní peníze můžeš kupovat Lootboxy (Basic, Premium, Legendary). Otevřít bednu jde ale pouze <strong>1x za 12 hodin</strong>. Získáš unikátní předměty do `/lootbox inventory`, které si můžeš aktivovat pomocí `/lootbox use`.</p>
+                    <p class="text-sm text-gray-400"><strong>Příklady předmětů:</strong> Daňové prázdniny (pro podniky na 7 dní), Štít streaku (zachrání tě, když zapomeneš dát /denni), Ochrana před lupiči, Work Booster (2x plat), Šťastná mince (+25% šance na výhru v hazardu).</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item">
+                    <h3 class="mb-3"><span class="cmd-title">/achievements</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">Sleduje tvůj herní pokrok. Za překonání milníků (např. 1 000x /work, milionář, okradení 5 lidí) se ti automaticky odemknou achievementy s velkou finanční odměnou.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="zabava" class="mb-20 doc-section">
+            <h2 class="text-3xl font-bold text-white mb-2">🎱 Zábava & Ostatní</h2>
+            <p class="text-gray-400 mb-8 border-b border-discord-card pb-4">Socializační prvky a muzika.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="cmd-card p-6 search-item">
+                    <h3 class="text-lg font-bold text-white mb-3">🎵 Lavalink Hudba</h3>
+                    <p class="text-sm text-gray-300 mb-3">Bot umí hrát hudbu ve Voice kanálech z Youtube nebo Spotify s těmito příkazy:</p>
+                    <ul class="text-sm text-discord-accent font-medium space-y-1">
+                        <li><code>/play &lt;odkaz/název&gt;</code> - Zařadí skladbu do fronty.</li>
+                        <li><code>/skip</code>, <code>/stop</code>, <code>/pause</code></li>
+                        <li><code>/queue</code> - Výpis čekajících písniček.</li>
+                        <li><code>/np</code> - Ukáže progress-bar aktuálně hrající skladby.</li>
+                        <li><code>/volume</code>, <code>/loop</code>, <code>/shuffle</code>, <code>/seek</code></li>
                     </ul>
                 </div>
 
-                <!-- Holding Detail -->
-                <div class="card p-6 border-l-4 border-purple-500 search-item bg-discord-sidebar">
-                    <h3 class="text-xl font-bold text-white mb-4">Jak přesně fungují Holdingy</h3>
-                    <p class="text-sm text-gray-400 mb-4">Holdingy umožňují hráčům tvořit investiční fondy a spojovat kapitál.</p>
-                    <ul class="space-y-3 text-sm text-gray-300">
-                        <li><strong>Založení a členství:</strong> CEO zaplatí tučný poplatek za <code>/holding create</code>. Přes <code>/holding invite</code> může nabrat až 10 dalších hráčů.</li>
-                        <li><strong>Sdílená pokladna (Trezor):</strong> Členové mohou libovolně dotovat holding příkazem <code>/holding deposit</code>.</li>
-                        <li><strong>Rozdělování zisku (Klíčová mechanika):</strong> CEO rozděluje podíly firmy v procentech (<code>/holding setshares</code>). Součet pro všechny členy musí být přesně 100 %. Když kdokoliv zkusí peníze vybrat (<code>/holding withdraw 10000</code>), <strong>nedostane je on sám!</strong> Těch 10 000 se okamžitě rozpadne podle nastavených procent a rozešle se na účty všem členům holdingu.</li>
-                        <li><strong>Ochrana proti diktatuře:</strong> CEO nemůže někoho vykopnout hned, aby mu vzal vklad. <code>/holding kick</code> vyžaduje hlasování nadpoloviční většiny členů. Přímý "Force-Kick" od CEO má cooldown 30 dní.</li>
+                <div class="cmd-card p-6 search-item">
+                    <h3 class="text-lg font-bold text-white mb-3">🧩 Minihry & Kalkulačky</h3>
+                    <ul class="text-sm text-gray-300 space-y-2">
+                        <li><span class="cmd-title">/8ball</span> - Magická koule, která odpoví na jakoukoliv otázku.</li>
+                        <li><span class="cmd-title">/arrest</span> - Vezme avatar hráče a nakreslí ho za vězeňské mříže do obrázku.</li>
+                        <li><span class="cmd-title">/iq</span> a <span class="cmd-title">/lovecalc</span> - Vtipné výpočty s deterministickým výsledkem pro dané uživatele.</li>
+                        <li><span class="cmd-title">/animal</span> a <span class="cmd-title">/lipton</span> - Jaké jsi dnes "Spirit animal" nebo příchuť čaje (mění se obden).</li>
+                        <li><span class="cmd-title">/slap</span> - Praští uživatele náhodným vtipným předmětem (např. roličkou toaleťáku).</li>
+                        <li><span class="cmd-title">/zpovednice</span> - Otevře anonymní dotazník. Zpověď je bezpečně zašifrována a odeslána k moderátorům ke schválení.</li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- AKCIE -->
-        <section id="akcie" class="mb-16 doc-section">
-            <h2 class="text-3xl font-bold text-white mb-6 border-b border-discord-card pb-2">📈 Akciový trh (Stocks)</h2>
-            <div class="card p-6 search-item relative overflow-hidden">
-                <!-- Grafika na pozadí -->
-                <div class="absolute right-0 bottom-0 opacity-10 pointer-events-none">
-                    <svg width="200" height="100" viewBox="0 0 200 100"><polyline fill="none" stroke="#5865F2" stroke-width="4" points="0,100 40,60 80,80 120,30 160,50 200,10"/></svg>
-                </div>
-                
-                <h3 class="text-xl font-bold text-white mb-4">Dynamická simulace trhu</h3>
-                <p class="text-sm text-gray-300 mb-4">Trh v Melancholy není jen náhodné házení kostkou. 8 unikátních firem (např. TechCorp, AquaLife) upravuje své ceny <strong>každou hodinu</strong> na základě matematického modelu geometrického Brownova pohybu. Cena má tendenci se v dlouhém období vracet k průměru, ale události na trhu (oznamované v novinkách) tvoří volatilitu.</p>
-                
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                    <div class="bg-discord-bg p-4 rounded-lg border border-discord-card text-center transition-colors hover:border-discord-accent">
-                        <code class="block mb-2 text-sm">/stocks</code>
-                        <span class="text-xs text-gray-400">Přehled trhu a emoji grafy trendů</span>
+        <section id="moderace-admin" class="mb-20 doc-section">
+            <h2 class="text-3xl font-bold text-white mb-2">🛡️ Moderace, Tickety & Admin</h2>
+            <p class="text-gray-400 mb-8 border-b border-discord-card pb-4">Nástroje pro správu serveru a AutoMod.</p>
+
+            <div class="space-y-6">
+                <article class="cmd-card p-6 search-item border-l-4 border-red-600">
+                    <h3 class="text-xl font-bold text-white mb-3">Anti-Raid a AutoMod Filtr</h3>
+                    <p class="text-sm text-gray-300 mb-3">Bot automaticky zahazuje účty mladší 12 hodin. Má vlastní filtr na L33t-speak (např. p!ca), který detekuje zakázaný obsah.</p>
+                    <ul class="list-disc list-inside text-sm text-gray-400 space-y-1">
+                        <li><strong>Discord Invites:</strong> Detekce linek na cizí servery. Bot je maže a při opakovaném porušení dává progresivní time-outy (Warn -> 30m -> 1h -> 6h -> 12h -> 24h).</li>
+                        <li><strong>Extremismus:</strong> Automatické smazání zprávy a zaprotokolovaný Warn.</li>
+                        <li><strong>CSAM:</strong> Okamžitý timeout uživatele na 24 hodin a notifikace moderátorům.</li>
+                    </ul>
+                </article>
+
+                <article class="cmd-card p-6 search-item">
+                    <h3 class="mb-3"><span class="cmd-title">/warn</span> <span class="cmd-arg">&lt;uživatel&gt;</span> | <span class="cmd-title">/unwarn</span> | <span class="cmd-title">/history</span> | <span class="cmd-title">/ban</span></h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">Každý trest vygeneruje unikátní 8místné ID, díky kterému jej může moderátor přes <code>/unwarn</code> zrušit. Příkaz <code>/ban</code> umí dát časovaný ban (např. 30d). Zahrnuje i unikátní <strong>Pending Ban</strong> - pokud troll opustí server, bot uloží jeho ID a ban aplikuje v setině sekundy hned, jak se pokusí znovu napojit.</p>
+                </article>
+
+                <article class="cmd-card p-6 search-item">
+                    <h3 class="text-xl font-bold text-white mb-3">Ticket Systém (/ticket)</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed mb-3">Příkaz <code>/ticket panel</code> umístí tlačítko pro podporu. Po kliknutí vyplní uživatel Modal a vygeneruje se skrytý kanál.</p>
+                    <p class="text-sm text-gray-400">Moderátor klikne na tlačítko "Vzít Ticket" a začne případ řešit. Jakmile jej přes <code>/ticket closerequest</code> nebo <code>/ticket close</code> uzavře, bot vygeneruje <strong>kompletní, formátovanou a stylovou HTML stránku (transcript)</strong> celé konverzace a zašle ji uživateli i do log kanálu.</p>
+                </article>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-discord-bg p-4 rounded border border-discord-card search-item">
+                        <h4 class="text-white font-bold mb-2">Giveaways (/giveaway)</h4>
+                        <p class="text-xs text-gray-400">Příkazy pro tvorbu slosování (create, delete, reroll, forcespin). Vygeneruje zprávu s tlačítkem a po vypršení času atomaticky náhodně vybere určený počet výherců ze zapsaných lidí.</p>
                     </div>
-                    <div class="bg-discord-bg p-4 rounded-lg border border-discord-card text-center transition-colors hover:border-discord-accent">
-                        <code class="block mb-2 text-sm">/invest</code>
-                        <span class="text-xs text-gray-400">Nákup přesného počtu akcií firmy</span>
-                    </div>
-                    <div class="bg-discord-bg p-4 rounded-lg border border-discord-card text-center transition-colors hover:border-discord-accent">
-                        <code class="block mb-2 text-sm">/portfolio</code>
-                        <span class="text-xs text-gray-400">Zisk/Ztráta (P&L) aktivních investic</span>
-                    </div>
-                    <div class="bg-discord-bg p-4 rounded-lg border border-discord-card text-center transition-colors hover:border-discord-accent">
-                        <code class="block mb-2 text-sm">/sellstock</code>
-                        <span class="text-xs text-gray-400">Prodej a realizace zisku/ztráty</span>
+                    <div class="bg-discord-bg p-4 rounded border border-discord-card search-item">
+                        <h4 class="text-white font-bold mb-2">Záloha Serveru (/backup)</h4>
+                        <p class="text-xs text-gray-400">Příkaz <code>/backup create</code> uloží veškeré kanály, kategorie, oprávnění a nastavení do JSON souboru. V případě raidu umí <code>/backup load (full/missing)</code> celý server přesně obnovit do tohoto stavu.</p>
                     </div>
                 </div>
             </div>
         </section>
-
-        <!-- CASINO -->
-        <section id="casino" class="mb-16 doc-section">
-            <h2 class="text-3xl font-bold text-white mb-6 border-b border-discord-card pb-2">🎰 Casino & Gambling</h2>
-            <p class="text-sm text-gray-400 mb-6 max-w-4xl">Unikátností bota je renderování obrazu. Značná část her negeneruje jen text, ale přes Python knihovnu PIL kreslí fyzické stoly, karty, herní plány a grafy jako .png obrázky odesílané do chatu.</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="card p-5 search-item border-t-2 border-t-green-500 hover:bg-discord-hover">
-                    <h3 class="font-bold text-lg mb-1 flex items-center justify-between">🃏 Blackjack <code>/blackjack</code></h3>
-                    <p class="text-xs text-gray-400">Sólo nebo Multiplayer (v lobby). Plná pravidla: Hit, Stand, Double, Split, Insurance. Karty se vizuálně renderují do obrázku stolu s žetony.</p>
-                </div>
-                <div class="card p-5 search-item border-t-2 border-t-red-500 hover:bg-discord-hover">
-                    <h3 class="font-bold text-lg mb-1 flex items-center justify-between">📈 Crash <code>/crash</code></h3>
-                    <p class="text-xs text-gray-400">Multiplayer hra. Násobitel stoupá a křivka se v reálném čase (aktualizace obrázku) vykresluje. Vyber dříve, než raketa vybouchne.</p>
-                </div>
-                <div class="card p-5 search-item border-t-2 border-t-yellow-500 hover:bg-discord-hover">
-                    <h3 class="font-bold text-lg mb-1 flex items-center justify-between">💣 Mines <code>/mines</code></h3>
-                    <p class="text-xs text-gray-400">Mřížka 5x5 přes Discord Tlačítka. Vyber si počet min (1-24). Odkrývej bezpečně diamanty a Cashoutni to před výbuchem.</p>
-                </div>
-                <div class="card p-5 search-item border-t-2 border-t-purple-500 hover:bg-discord-hover">
-                    <h3 class="font-bold text-lg mb-1 flex items-center justify-between">🏰 Tower <code>/tower</code></h3>
-                    <p class="text-xs text-gray-400">Šplhej po 8 patrech věže pomocí tlačítek. 3 obtížnosti (Easy, Medium, Hard určuje počet min v řádku). Krásné generované UI.</p>
-                </div>
-                <div class="card p-5 search-item border-t-2 border-t-blue-500 hover:bg-discord-hover">
-                    <h3 class="font-bold text-lg mb-1 flex items-center justify-between">♠️ Poker <code>/poker</code></h3>
-                    <p class="text-xs text-gray-400">Texas Hold'em pro 2-8 hráčů. Kompletní vizualizace karet na stole, žetonů a potu. Tlačítka pro Fold, Check, Call, Raise, All-in.</p>
-                </div>
-                <div class="card p-5 search-item border-t-2 border-t-orange-500 hover:bg-discord-hover">
-                    <h3 class="font-bold text-lg mb-1 flex items-center justify-between">🏇 Dostihy <code>/horserace</code></h3>
-                    <p class="text-xs text-gray-400">Vsaď na jednoho ze 6 koní s odlišnými kurzy a vlastnostmi. Bot po sekundách upravuje zprávu a tvoří animaci běhu koní na trati do cíle.</p>
-                </div>
-            </div>
-            
-            <!-- Další minihry kompaktně -->
-            <div class="mt-4 p-4 rounded-lg bg-discord-sidebar border border-discord-card search-item">
-                <h4 class="text-sm font-bold text-white mb-2">Rychlé hry (Textové / Tlačítkové):</h4>
-                <div class="flex flex-wrap gap-2 text-xs text-gray-300">
-                    <span class="bg-discord-bg px-2 py-1 rounded">🎰 /slots (3 válce)</span>
-                    <span class="bg-discord-bg px-2 py-1 rounded">🎱 /keno (Loterie 20/80)</span>
-                    <span class="bg-discord-bg px-2 py-1 rounded">🪨 /rps (Kámen nůžky - duel)</span>
-                    <span class="bg-discord-bg px-2 py-1 rounded">🪙 /coinflip (Panna Orel)</span>
-                    <span class="bg-discord-bg px-2 py-1 rounded">🔫 /roulette (Ruská ruleta)</span>
-                    <span class="bg-discord-bg px-2 py-1 rounded">🎴 /baccarat (Player vs Banker)</span>
-                    <span class="bg-discord-bg px-2 py-1 rounded">⬆️ /highlow (Vyšší / Nižší)</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- OSTATNÍ ZKRÁCENÉ (Lootboxy, Moderace atd) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
-            <!-- LOOTBOXY -->
-            <section id="lootboxy" class="doc-section">
-                <h2 class="text-2xl font-bold text-white mb-4 border-b border-discord-card pb-2">📦 Lootboxy a Inventář</h2>
-                <div class="card p-5 search-item h-full">
-                    <p class="text-sm text-gray-400 mb-3">Získávání vzácných itemů, které reálně mění herní mechaniky (<code>/lootbox buy/open/use</code>).</p>
-                    <ul class="space-y-2 text-sm text-gray-300 list-disc list-inside">
-                        <li><strong>Work Booster 2x:</strong> Hodinu zvedá výplatu z /work na dvojnásobek.</li>
-                        <li><strong>Štít streaku:</strong> Pokud hráč nevybere /denni a ztratil by sérii, štít se sám zkonzumuje a sérii udrží.</li>
-                        <li><strong>Ochrana před lupiči:</strong> Automaticky zablokuje jeden úspěšný příkaz /rob vedený na hráče.</li>
-                        <li><strong>Daňové prázdniny:</strong> Majitel podniku neplatí 7 dní taxy za obnovu licence.</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- MODERACE -->
-            <section id="moderace" class="doc-section">
-                <h2 class="text-2xl font-bold text-white mb-4 border-b border-discord-card pb-2">🛡️ Moderace & Anti-Raid</h2>
-                <div class="card p-5 search-item h-full">
-                    <p class="text-sm text-gray-400 mb-3">Bot má zabudovaný AutoMod, který filtruje l33t-speak nadávky, linky a pozvánky (automatické tresty).</p>
-                    <ul class="space-y-2 text-sm text-gray-300">
-                        <li><code>/warn</code>, <code>/unwarn</code> - Systém unikátních ID trestů uložených v databázi.</li>
-                        <li><code>/ban</code> - <strong>Pending Ban systém.</strong> Pokud troll opustí server před banem, bot si jeho ID uloží a zabanuje ho v setině sekundy, kdy by se zkusil znovu připojit.</li>
-                        <li><code>/settings mod-role</code> - Oprávnění pro bota nejsou fixně v kódu, admini mohou za běhu přidávat role, které smí používat mod příkazy.</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- TICKET SYSTÉM -->
-            <section id="tickety" class="doc-section">
-                <h2 class="text-2xl font-bold text-white mb-4 border-b border-discord-card pb-2">🎫 Ticket Systém</h2>
-                <div class="card p-5 search-item h-full border-l-2 border-blue-400">
-                    <p class="text-sm text-gray-400 mb-3">Propracovaný systém s logováním do krásných HTML transcriptů.</p>
-                    <ul class="space-y-2 text-sm text-gray-300">
-                        <li><code>/ticket panel</code> - Vygeneruje embed. Uživatel klikne, otevře se Modal, kde sepíše problém. Vytvoří se kanál.</li>
-                        <li><strong>Práce v ticketu:</strong> Tlačítko "Vzít případ" (přiřadí ticket konkrétnímu adminovi).</li>
-                        <li><strong>Uzavření:</strong> <code>/ticket closerequest</code> nabídne uživateli možnost ticket zavřít, pokud souhlasí. <code>/ticket close</code> jej okamžitě zavře a vygeneruje soubor s historií.</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- HUDBA -->
-            <section id="hudba" class="doc-section">
-                <h2 class="text-2xl font-bold text-white mb-4 border-b border-discord-card pb-2">🎵 Lavalink Hudba</h2>
-                <div class="card p-5 search-item h-full">
-                    <p class="text-sm text-gray-400 mb-3">Wavelink integrace. Podpora YouTube (bez reklam), Spotify, SoundCloud a Apple Music.</p>
-                    <div class="flex flex-wrap gap-2 text-xs text-discord-accent font-medium">
-                        <span class="bg-discord-bg px-2 py-1 rounded">/play</span>
-                        <span class="bg-discord-bg px-2 py-1 rounded">/skip</span>
-                        <span class="bg-discord-bg px-2 py-1 rounded">/queue</span>
-                        <span class="bg-discord-bg px-2 py-1 rounded">/np</span>
-                        <span class="bg-discord-bg px-2 py-1 rounded">/volume</span>
-                        <span class="bg-discord-bg px-2 py-1 rounded">/loop</span>
-                        <span class="bg-discord-bg px-2 py-1 rounded">/seek</span>
-                    </div>
-                </div>
-            </section>
-            
-        </div>
 
     </main>
 
-    <!-- JavaScript pro funkčnost vyhledávání a UI vylepšení -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const searchInput = document.getElementById('searchInput');
-            const searchItems = document.querySelectorAll('.search-item');
             const sections = document.querySelectorAll('.doc-section');
             const noResults = document.getElementById('noResults');
 
-            // Vyhledávací funkce
             searchInput.addEventListener('input', (e) => {
                 const query = e.target.value.toLowerCase().trim();
                 let hasVisibleItemsTotal = false;
 
                 sections.forEach(section => {
-                    const itemsInSection = section.querySelectorAll('.search-item');
+                    const items = section.querySelectorAll('.search-item');
                     let hasVisibleItemInSection = false;
 
-                    // Pokud sekce nemá specifické itemy, hledáme v jejím textu přímo
-                    if (itemsInSection.length === 0) {
-                        const match = section.textContent.toLowerCase().includes(query);
-                        if (match) {
-                            section.classList.remove('hidden-by-search');
-                            hasVisibleItemsTotal = true;
-                        } else {
-                            section.classList.add('hidden-by-search');
-                        }
-                        return;
-                    }
-
-                    // Pokud má sekce podkarty, filtrujeme karty
-                    itemsInSection.forEach(item => {
+                    items.forEach(item => {
                         const text = item.textContent.toLowerCase();
                         if (text.includes(query)) {
                             item.classList.remove('hidden-by-search');
@@ -357,14 +393,12 @@
                         }
                     });
 
-                    // Skrýt celou sekci, pokud nemá žádnou viditelnou kartu a nadpis neodpovídá
-                    const sectionTitleMatch = section.querySelector('h2')?.textContent.toLowerCase().includes(query);
+                    const sectionTitleMatch = section.querySelector('h2').textContent.toLowerCase().includes(query);
                     
                     if (hasVisibleItemInSection || sectionTitleMatch) {
                         section.classList.remove('hidden-by-search');
-                        // Pokud matchnul jen nadpis, ukážeme všechny karty uvnitř
                         if (sectionTitleMatch && !hasVisibleItemInSection && query !== "") {
-                            itemsInSection.forEach(item => item.classList.remove('hidden-by-search'));
+                            items.forEach(item => item.classList.remove('hidden-by-search'));
                             hasVisibleItemsTotal = true;
                         }
                     } else {
@@ -372,7 +406,6 @@
                     }
                 });
 
-                // Zobrazení "Nic nenalezeno"
                 if (!hasVisibleItemsTotal && query !== "") {
                     noResults.classList.remove('hidden');
                 } else {
@@ -380,13 +413,12 @@
                 }
             });
 
-            // Smooth scroll a active state v navigaci
+            // Active Menu Highlighting
             const navLinks = document.querySelectorAll('.nav-link');
-            
             navLinks.forEach(link => {
                 link.addEventListener('click', function() {
-                    navLinks.forEach(l => l.classList.remove('active', 'bg-discord-card', 'text-discord-accent'));
-                    this.classList.add('active', 'bg-discord-card', 'text-discord-accent');
+                    navLinks.forEach(l => l.classList.remove('active', 'text-white'));
+                    this.classList.add('active', 'text-white');
                 });
             });
         });
